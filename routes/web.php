@@ -11,4 +11,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/clientes', App\Http\Livewire\ClientesController::class)->name('clientes');
+    ->get('/Clientes', App\Http\Livewire\ClientesController::class)->name('clientes');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/TipoCosto', App\Http\Livewire\TipoCostoController::class)->name('tipoCosto');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/Categorias', App\Http\Livewire\CategoriasController::class)->name('categorias');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/Productos', App\Http\Livewire\ProductosController::class)->name('productos');
