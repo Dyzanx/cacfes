@@ -1,6 +1,6 @@
 <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Cacfes - Productos') }}
+            {{ __('Cacfes - Facturación De Costos') }}
         </h2>
 </x-slot>
 
@@ -13,10 +13,11 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         @if($crear == 'true' || $productoEdit != '')
                         @if($productoEdit != '')
-                        <h1 class="font-bold text-black p-3 text-3xl">Editar Producto - {{$productoEdit->cliente}}</h1>
+                        <h1 class="font-bold text-black p-3 text-3xl">Editar Facturación De Costo - {{$productoEdit->cliente}}</h1>
                         @else
-                        <h1 class="font-bold text-black p-3 text-3xl">Añadir Nuevo Producto</h1>
+                        <h1 class="font-bold text-black p-3 text-3xl">Añadir Nueva Facturación De Costo</h1>
                         @endif
+                        <hr>
 
                         <form @if($productoEdit) 
                         wire:submit.prevent="update({{$productoEdit->id}})"
@@ -134,7 +135,7 @@
 
                                         @else
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="item" class="block text-sm font-medium text-gray-700">Item<span class="text-red-400 font-bold"> *</span></label>
+                                            <label for="item" class="block text-sm font-medium text-gray-700">Tipo De Costo<span class="text-red-400 font-bold"> *</span></label>
                                             <select name="item" wire:model="item" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full">
                                                 <option selected>Seleccione el tipo de costo</option>
                                                 @foreach($items as $item)
@@ -229,11 +230,26 @@
                                             <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
                                             <textarea wire:model="observaciones" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" name="observaciones" id="observaciones" cols="60" rows="8"></textarea>
                                         </div>
+                                        
+                                        <div class="col-span-6 sm:col-span-3 bg-grey-lighter">
+                                            <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-pink-400 cursor-pointer hover:bg-pink-400 hover:text-white">
+                                                <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                                </svg>
+                                                <span class="mt-2 text-base leading-normal">Selecciona La Foto </span>
+                                                <input type='file' wire:model="image_path" class="hidden" />
+                                            </label>
+                                        </div>
                                         @endif
                                     </div>
                                     </div>
                                 </div>
                                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                    @if($descuento != '' || $cantidad != '' || $valUnitario != '' || $direccion != '')
+                                    <a href="" wire:click.prevent="limpiar()" class="mr-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                                        Limpiar Campos
+                                    </a>
+                                    @endif
                                     <a href="" wire:click.prevent="cancelar()" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">
                                         Cancelar
                                     </a>
@@ -252,16 +268,34 @@
                         </form>
                         @else 
                         <i wire:click.prevent="crear()" class="bi bi-bag-plus-fill m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"></i>
-                        <h1 class="font-bold text-black p-3 text-3xl">Productos</h1>
+                        <h1 class="font-bold text-black p-3 text-3xl">Facturación De Costos</h1>
                         <hr>
-                        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6 pr-">
+                        <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-6 pr-">
                             <input wire:model="search" type="text" 
-                            placeholder="Buscar Un Producto Por : Direccion - ID - Cantidad - Valor Unitario - Descuento" 
-                            class="m-3 form-input rounded-md shadow-sm mt-1 block w-full">
+                            placeholder="Buscar Un Producto Por : Direccion - Cantidad - Valor Unitario - Descuento" 
+                            class="m-3 form-input rounded-md shadow-sm mt-1 block w-full focus:ring-green-400 focus:border-green-400">
+                            <div class="m-3 form-input shadow-sm mt-1 block">
+                                <select name="perPage" wire:model="perPage" class="rounded-md focus:ring-green-400 focus:border-green-400 outline-none text-gray-500">
+                                    <option value="10">10 productos por pagina</option>
+                                    <option value="15">15 productos por pagina</option>
+                                    <option value="20">20 productos por pagina</option>
+                                    <option value="30">30 productos por pagina</option>
+                                    <option value="50">50 productos por pagina</option>
+                                    <option value="60">60 productos por pagina</option>
+                                    <option value="100">100 productos por pagina</option>
+                                </select>
+                            </div>
+                            @if($search != '' || $perPage != 10)
+                            <button wire:click.prevent="limpiarBusqueda()" class="m-3 form-input rounded-md shadow-sm mt-1 block w-16 text-white bg-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">
+                                <i class="bi bi-x"></i>
+                            </button>
+                            @endif
                         </div>
                         @if($mensajeSuccess != '')
+                            <hr>
                             <strong class="font-bold text-green-700 pl-2">{{$mensajeSuccess}}</strong>
                         @elseif($mensajeError != '')
+                            <hr>
                             <strong class="font-bold text-red-700 pl-2">{{$mensajeError}}</strong>
                         @endif
                         <table class="min-w-full divide-y divide-gray-200">

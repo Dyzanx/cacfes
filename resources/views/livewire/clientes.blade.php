@@ -24,11 +24,11 @@
                         @csrf
                         <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <div class="grid grid-cols-6 gap-6">
+                            <div class="grid grid-cols-9 gap-6">
                             @if($clienteEdit)
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
-                                <input type="text" wire:model="nombre" value="{{$clienteEdit->nombre}}" name="nombre" id="nombre" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" wire:model="nombre" value="{{$clienteEdit->nombre}}" name="nombre" id="nombre" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" autofocus autocomplete="off">
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
@@ -73,6 +73,15 @@
                             </div>
                             @else
                             <div class="col-span-6 sm:col-span-3">
+                                <label for="tipoCliente" class="block text-sm font-medium text-gray-700">Tipo de Cliente<span class="text-red-400 font-bold"> *</span></label>
+                                <select name="tipoCliente" wire:model="tipoCliente" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full" autofocus>
+                                    <option selected>Selecciona El Tipo De Cliente</option>
+                                    <option value="cliente">Cliente</option>
+                                    <option value="proveedor">Proveedor</option>
+                                </select>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
                                 <label for="tipoDoc" class="block text-sm font-medium text-gray-700">Tipo de Documento</label>
                                 <select name="tipoDoc" wire:model="tipoDoc" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full">
                                     <option selected>Seleccione el tipo de documento</option>
@@ -112,15 +121,6 @@
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="tipoCliente" class="block text-sm font-medium text-gray-700">Tipo de Cliente<span class="text-red-400 font-bold"> *</span></label>
-                                <select name="tipoCliente" wire:model="tipoCliente" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full">
-                                    <option selected>Selecciona El Tipo De Cliente</option>
-                                    <option value="cliente">Cliente</option>
-                                    <option value="proveedor">Proveedor</option>
-                                </select>
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-3">
                                 <label for="tipoBoleta" class="text-sm font-medium text-gray-700">Papel Térmico</label>
                                 <input wire:model="tipoBoleta" type="checkbox" id="tipoBoleta" name="tipoBoleta" value="Papel Térmico" class="mt-1 focus:ring-green-400 focus:border-green-400 shadow-sm sm:text-sm border-gray-300 rounded-md">                                                                
                             </div>
@@ -156,7 +156,35 @@
                     @else
                     <i wire:click.prevent="crear()" class="bi bi-person-plus m-3 cursor-pointer float-right inline-flex justify-center  py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"></i>
                     <h1 class="font-bold text-black p-3 text-3xl">Clientes</h1>
-                        <hr>
+                    <hr>
+                    <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-6 pr-">
+                            <input wire:model="search" type="text" 
+                            placeholder="Buscar Un Cliente Por : Celular - Telefono - Numero Documento - Dirección De Entrega" 
+                            class="m-3 form-input rounded-md shadow-sm mt-1 block w-full focus:ring-green-400 focus:border-green-400">
+                            <div class="m-3 form-input shadow-sm mt-1 block">
+                                <select name="PerTipo" wire:model="perTipo" class="rounded-md focus:ring-green-400 focus:border-green-400 outline-none text-gray-500">
+                                    <option>Todo</option>
+                                    <option value="cliente">Clientes</option>
+                                    <option value="proveedor">Proveedores</option>
+                                </select>
+                            </div>
+                            <div class="m-3 form-input shadow-sm mt-1 block">
+                                <select name="perPage" wire:model="perPage" class="rounded-md focus:ring-green-400 focus:border-green-400 outline-none text-gray-500">
+                                    <option value="10">10 clientes por pagina</option>
+                                    <option value="15">15 clientes por pagina</option>
+                                    <option value="20">20 clientes por pagina</option>
+                                    <option value="30">30 clientes por pagina</option>
+                                    <option value="50">50 clientes por pagina</option>
+                                    <option value="60">60 clientes por pagina</option>
+                                    <option value="100">100 clientes por pagina</option>
+                                </select>
+                            </div>
+                            @if($search != '' || $perPage != 10)
+                            <button wire:click.prevent="limpiarBusqueda()" class="m-3 form-input rounded-md shadow-sm mt-1 block w-16 text-white bg-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">
+                                <i class="bi bi-x"></i>
+                            </button>
+                            @endif
+                        </div>
                         @if($mensajeSuccess != '')
                             <strong class="font-bold text-green-700 pl-2">{{$mensajeSuccess}}</strong>
                         @elseif($mensajeError != '')
@@ -246,7 +274,7 @@
                     @endforeach
                         </table>
                         <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                            {{$clientes->links()}}
+                            
                         </div>
                       </div>
                     </div>

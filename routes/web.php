@@ -20,4 +20,7 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->get('/Categorias', App\Http\Livewire\CategoriasController::class)->name('categorias');
 
 Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/Productos', App\Http\Livewire\ProductosController::class)->name('productos');
+    ->get('/FacturaCostos', App\Http\Livewire\facturaCostosController::class)->name('facturaCostos');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/Ventas', App\Http\Livewire\VentasController::class)->name('ventas');

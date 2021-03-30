@@ -15,6 +15,12 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Inicio') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('ventas') }}" :active="request()->routeIs('ventas')">
+                        {{ __('Ventas') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('facturaCostos') }}" :active="request()->routeIs('facturaCostos')">
+                        {{ __('Facturación Costos') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
                         {{ __('Clientes') }}
                     </x-jet-nav-link>
@@ -23,9 +29,6 @@
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
                         {{ __('Categorias') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('productos') }}" :active="request()->routeIs('productos')">
-                        {{ __('Productos') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -153,6 +156,12 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Inicio') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('ventas') }}" :active="request()->routeIs('ventas')">
+                {{ __('Ventas') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('facturaCostos') }}" :active="request()->routeIs('facturaCostos')">
+                {{ __('Facturación Costos') }}
+            </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
                 {{ __('Clientes') }}
             </x-jet-responsive-nav-link>
@@ -161,9 +170,6 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
                 {{ __('Categorias') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('productos') }}" :active="request()->routeIs('productos')">
-                        {{ __('Productos') }}
             </x-jet-responsive-nav-link>
         </div>
 

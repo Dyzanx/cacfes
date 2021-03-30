@@ -2,14 +2,23 @@
 
 namespace App\Http\Livewire;
 
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use App\Models\Producto;
 use App\Models\tipoCosto;
 use App\Models\Categorias;
 use App\Models\Clientes;
 
-class ProductosController extends Component{
+class facturaCostosController extends Component{
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage'
+    ];
     public $search;
+    public $perPage = 10;
 
     public $item;
     public $categoria;
@@ -33,14 +42,18 @@ class ProductosController extends Component{
     public $pEditCat = '';
     public $pEditProv = '';
 
+    public function limpiarBusqueda(){
+        $this->search = '';
+        $this->perPage = 10;
+    }
+
     public function render(){
-        return view('livewire.productos',[
+        return view('livewire.facturaCostos',[
             'productos' => Producto::orderBy('id', 'desc')
             ->where('direccion', 'LIKE', "%{$this->search}%")
-            ->orWhere('id', 'LIKE', "%{$this->search}%")
             ->orWhere('cantidad', 'LIKE', "%{$this->search}%")
             ->orWhere('valor_unitario', 'LIKE', "%{$this->search}%")
-            ->orWhere('descuento', 'LIKE', "%{$this->search}%")->paginate(30),
+            ->orWhere('descuento', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
 
             'items' => tipoCosto::orderBy('id', 'desc')->get(),
             'categorias' => Categorias::orderBy('id', 'desc')->get(),
@@ -51,6 +64,21 @@ class ProductosController extends Component{
 
     public function crear(){
         $this->crear = 'true';
+    }
+
+    public function limpiar(){
+        $this->fecha = '';
+        $this->item = '';
+        $this->categoria = '';
+        $this->cliente = '';
+        $this->cantidad = '';
+        $this->udMedida = '';
+        $this->valUnitario = '';
+        $this->descuento = '';
+        $this->direccion = '';
+        $this->proveedor = '';
+        $this->descripcion = '';
+        $this->observaciones = '';
     }
 
     public function cancelar(){
@@ -84,6 +112,12 @@ class ProductosController extends Component{
             $producto->descripcion = $this->descripcion;
             $producto->observacion = $this->observaciones;
 
+            if($this->image_path){
+                $image_path_name = time().$this->image_path->getClientOriginalName();
+                Storage::disk('productos')->put($image_path_name, File::get($this->image_path));
+                $producto->image_path = $image_path_name;
+            }
+
             $producto->save();
 
             $this->mensajeError = '';
@@ -92,6 +126,19 @@ class ProductosController extends Component{
             if($producto->save()){
                 $this->mensajeSuccess = 'Producto Añadido Correctamente';
                 $this->crear = 'false';
+
+                $this->fecha = '';
+                $this->item = '';
+                $this->categoria = '';
+                $this->cliente = '';
+                $this->cantidad = '';
+                $this->udMedida = '';
+                $this->valUnitario = '';
+                $this->descuento = '';
+                $this->direccion = '';
+                $this->proveedor = '';
+                $this->descripcion = '';
+                $this->observaciones = '';
             }else{
                 $this->mensajeError = 'Hubo Un Fallo Al Crear El Producto';
                 $this->crear = 'false';

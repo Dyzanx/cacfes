@@ -6,6 +6,15 @@ use Livewire\Component;
 use App\Models\Clientes;
 
 class ClientesController extends Component{
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage',
+        'perTipo'
+    ];
+    public $search;
+    public $perPage = 10;
+    public $perTipo;
+
     public $nombre;
     public $celular;
     public $direccionEntrega;
@@ -22,9 +31,21 @@ class ClientesController extends Component{
     public $mensajeError;
     public $clienteEdit = '';
 
+    public function limpiarBusqueda(){
+        $this->search = '';
+        $this->perPage = 10;
+    }
+
     public function render(){
         return view('livewire.clientes', [
-            'clientes' => Clientes::paginate(30)
+            'clientes' => Clientes::
+            where('nombre', 'LIKE', "%{$this->search}%")
+            ->where('tipoCliente', '=', $this->perTipo)
+            ->orWhere('celular', 'LIKE', "%{$this->search}%")
+            ->orWhere('numeroDocumento', 'LIKE', "%{$this->search}%")
+            ->orWhere('direccion_entrega', 'LIKE', "%{$this->search}%")
+            ->orWhere('telefono', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
+
         ]);
     }
 
@@ -75,11 +96,12 @@ class ClientesController extends Component{
         $cliente->delete();
 
         if($cliente->delete()){
-            $this->mensajeSuccess = 'Cliente Borrado Correctamente';
-            $this->crear = 'false';
-        }else{
             $this->mensajeError = 'Hubo Un Fallo Al Borrar El Cliente';
             $this->crear = 'false';
+        }else{
+            $this->mensajeSuccess = 'Cliente Borrado Correctamente';
+            $this->crear = 'false';
+            
         }
     }
 
