@@ -19,7 +19,7 @@
                         {{ __('Ventas') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('facturaCostos') }}" :active="request()->routeIs('facturaCostos')">
-                        {{ __('Facturación Costos') }}
+                        {{ __('Costos') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
                         {{ __('Clientes') }}
@@ -160,7 +160,7 @@
                 {{ __('Ventas') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('facturaCostos') }}" :active="request()->routeIs('facturaCostos')">
-                {{ __('Facturación Costos') }}
+                {{ __('Costos') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
                 {{ __('Clientes') }}
