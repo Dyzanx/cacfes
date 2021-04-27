@@ -28,47 +28,47 @@
                             @if($clienteEdit)
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
-                                <input type="text" wire:model="nombre" value="{{$clienteEdit->nombre}}" name="nombre" id="nombre" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" autofocus autocomplete="off">
+                                <input type="text" wire:model="nombre" value="{{$clienteEdit->nombre}}" placeholder="{{$clienteEdit->nombre}}" autocomplete="off" name="nombre" id="nombre" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" autofocus>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="celular" class="block text-sm font-medium text-gray-700">Celular</label>
-                                <input type="text" wire:model="celular" value="{{$clienteEdit->celular}}" name="celular" id="celular" autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" maxlength="10">
+                                <input type="text" wire:model="celular" value="{{$clienteEdit->celular}}" placeholder="{{$clienteEdit->celular}}" autocomplete="off" name="celular" id="celular" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" maxlength="10">
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono Fijo</label>
-                                <input type="text" wire:model="telefono" value="{{$clienteEdit->telefono}}" name="telefono" id="telefono" autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" maxlength="8">
+                                <input type="text" wire:model="telefono" value="{{$clienteEdit->telefono}}" placeholder="{{$clienteEdit->telefono}}" autocomplete="off" name="telefono" id="telefono" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" maxlength="8">
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="contacto" class="block text-sm font-medium text-gray-700">Contacto</label>
-                                <input type="text" wire:model="contacto" value="{{$clienteEdit->contacto}}" name="contacto" id="contacto" autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" wire:model="contacto" value="{{$clienteEdit->contacto}}" placeholder="{{$clienteEdit->contacto}}" autocomplete="off" name="contacto" id="contacto" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
 
                             @if($clienteEdit->tipoBoleteria == 'Papel Térmico')
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="tipoBoleta" class="text-sm font-medium text-gray-700">Papel Térmico</label>
-                                <input wire:model="tipoBoleta" type="checkbox" id="tipoBoleta" name="tipoBoleta" value="Papel Térmico" class="mt-1 focus:ring-green-400 focus:border-green-400 shadow-sm sm:text-sm border-gray-300 rounded-md" checked>
-                            </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="tipoBoleta" class="text-sm font-medium text-gray-700">Papel Térmico</label>
+                                    <input checked wire:model="tipoBoleta" type="checkbox" id="tipoBoleta" name="tipoBoleta" value="Papel Térmico" class="mt-1 focus:ring-green-400 focus:border-green-400 shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
                             @else
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="tipoBoleta" class="text-sm font-medium text-gray-700">Papel Térmico</label>
-                                <input wire:model="tipoBoleta" type="checkbox" id="tipoBoleta" name="tipoBoleta" value="Papel Térmico" class="mt-1 focus:ring-green-400 focus:border-green-400 shadow-sm sm:text-sm border-gray-300 rounded-md">                                                                
-                            </div>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="tipoBoleta" class="text-sm font-medium text-gray-700">Papel Térmico</label>
+                                    <input wire:model="tipoBoleta" type="checkbox" id="tipoBoleta" name="tipoBoleta" value="" class="mt-1 focus:ring-green-400 focus:border-green-400 shadow-sm sm:text-sm border-gray-300 rounded-md">                                                                
+                                </div>
                             @endif
 
                             <div class="col-span-6 sm:col-span-4">
                                 <label for="direccionEntrega" class="block text-sm font-medium text-gray-700">Direccion De Entrega</label>
-                                <textarea wire:model="direccionEntrega" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" name="direccionEntrega" id="direccionEntrega" cols="60" rows="8">
-                                    {{$clienteEdit->direccionEntrega}}
+                                <textarea wire:model="direccionEntrega" value="{{$clienteEdit->direccion_entrega}}" placeholder="{{$clienteEdit->direccion_entrega}}" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" name="direccionEntrega" id="direccionEntrega" cols="60" rows="8">
+                                    
                                 </textarea>
                             </div>
 
                             <div class="col-span-6 sm:col-span-4">
                                 <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
-                                <textarea wire:model="observaciones" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" name="observaciones" id="observaciones" cols="60" rows="8">
-                                    {{$clienteEdit->observaciones}}
+                                <textarea wire:model="observaciones" value="{{$clienteEdit->observaciones}}" placeholder="{{$clienteEdit->observaciones}}" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" name="observaciones" id="observaciones" cols="60" rows="8">
+                                    
                                 </textarea>
                             </div>
                             @else
@@ -162,13 +162,6 @@
                             placeholder="Buscar Un Cliente Por : Celular - Telefono - Numero Documento - Dirección De Entrega" 
                             class="m-3 form-input rounded-md shadow-sm mt-1 block w-full focus:ring-green-400 focus:border-green-400">
                             <div class="m-3 form-input shadow-sm mt-1 block">
-                                <select name="PerTipo" wire:model="perTipo" class="rounded-md focus:ring-green-400 focus:border-green-400 outline-none text-gray-500">
-                                    <option>Todo</option>
-                                    <option value="cliente">Clientes</option>
-                                    <option value="proveedor">Proveedores</option>
-                                </select>
-                            </div>
-                            <div class="m-3 form-input shadow-sm mt-1 block">
                                 <select name="perPage" wire:model="perPage" class="rounded-md focus:ring-green-400 focus:border-green-400 outline-none text-gray-500">
                                     <option value="10">10 clientes por pagina</option>
                                     <option value="15">15 clientes por pagina</option>
@@ -186,8 +179,10 @@
                             @endif
                         </div>
                         @if($mensajeSuccess != '')
+                            <hr>
                             <strong class="font-bold text-green-700 pl-2">{{$mensajeSuccess}}</strong>
                         @elseif($mensajeError != '')
+                            <hr>
                             <strong class="font-bold text-red-700 pl-2">{{$mensajeError}}</strong>
                         @endif
                     <table class="min-w-full divide-y divide-gray-200">
@@ -231,40 +226,40 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">
-                                    {{$cli->nombre}}
+                                    {{substr($cli->nombre, 0, 10)}}...
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
-                                <?php echo '('.substr($cli->celular, 0, 3).')-'.substr($cli->celular, 3, 3).'-'.
-                                 substr($cli->celular, 6, 2).'-'.substr($cli->celular, 8, 2)?>
+                                {{ '('.substr($cli->celular, 0, 3).')-'.substr($cli->celular, 3, 3).'-'.
+                                 substr($cli->celular, 6, 2).'-'.substr($cli->celular, 8, 2)}}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                             @if($cli->tipoDocumento)
-                                {{$cli->tipoDocumento}} 
+                                {{ substr($cli->tipoDocumento, 0, 7)}}...
                             @else
-                                {{ __('Sin Este Dato') }}
+                                {{ __('N/A') }}
                             @endif</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">
                             @if($cli->numeroDocumento)
-                                {{$cli->numeroDocumento}}
+                                {{substr($cli->numeroDocumento, 0, 6)}}...
                             @else
-                                {{ __('Sin Este Dato') }}
+                                {{ __('N/A') }}
                             @endif</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{$cli->tipoCliente}}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            {{$cli->direccion_entrega}}
+                            {{substr($cli->direccion_entrega, 0, 10)}}...
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="" wire:click.prevent="editar({{$cli->id}})"><i class="bi bi-pen bg-blue-400 hover:bg-blue-300 rounded text-lg text-white p-3"></i></a>
+                            <a href="" wire:click.prevent="editar({{$cli->id}})" id="openModal"><i class="bi bi-pen bg-blue-400 hover:bg-blue-300 rounded text-lg text-white p-3"></i></a>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <a href="" wire:click.prevent="borrar({{$cli->id}})"><i class="bi bi-trash bg-red-400 hover:bg-red-300 rounded text-lg text-white p-3"></i></a>
@@ -274,7 +269,7 @@
                     @endforeach
                         </table>
                         <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                            
+                            {{$clientes->links()}}
                         </div>
                       </div>
                     </div>

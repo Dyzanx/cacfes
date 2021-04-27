@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Categorias;
+use App\Models\Ventas;
 
 class CategoriasController extends Component{
     public $nombre;
+    public $coste;
+    public $costeCatId;
 
     public $crear = 'false';
     public $mensajeSuccess;
@@ -19,6 +22,16 @@ class CategoriasController extends Component{
         ]);
     }
 
+    public function coste($id){
+        $this->costeCatId = $id;
+        $this->coste = Ventas::where('categoria_id', '=', $this->costeCatId)->orderBy('categoria_id', 'desc')->get();
+    }
+
+    public function cancelarCoste(){
+        $this->coste = null;
+        $this->costeCatId = null;
+    }
+
     public function crear(){
         $this->crear = 'true';
     }
@@ -26,6 +39,7 @@ class CategoriasController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->categoriaEdit = '';
+        $this->nombre = '';
     }
 
     public function save(){
@@ -42,6 +56,7 @@ class CategoriasController extends Component{
             if($categoria->save()){
                 $this->mensajeSuccess = 'Categoria Añadida Correctamente';
                 $this->crear = 'false';
+                $this->nombre = '';
             }else{
                 $this->mensajeError = 'Hubo Un Fallo Al Añadir La Categoria';
                 $this->crear = 'false';
@@ -70,12 +85,10 @@ class CategoriasController extends Component{
     }
 
     public function update($id){
-        $cat = Categorias::find($id);
+        if(!empty($this->nombre)){
+            $cat = Categorias::find($id);
 
-        if(true){
             $cat->nombre = $this->nombre;
-
-
             $cat->update();
 
             $this->mensajeError = '';
@@ -88,6 +101,9 @@ class CategoriasController extends Component{
                 $this->mensajeError = 'Hubo Un Fallo Al Actualizarlo';
                 $this->categoriaEdit = '';
             }
+        }else{
+            $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+            $this->categoriaEdit = '';
         }
     }
 

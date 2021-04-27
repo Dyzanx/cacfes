@@ -26,6 +26,7 @@ class TipoCostoController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->tipoCostoEdit = '';
+        $this->nombre = '';
     }
 
     public function save(){
@@ -42,6 +43,7 @@ class TipoCostoController extends Component{
             if($tipoCosto->save()){
                 $this->mensajeSuccess = 'Añadido Correctamente';
                 $this->crear = 'false';
+                $this->nombre = '';
             }else{
                 $this->mensajeError = 'Hubo Un Fallo Al Añadirlo';
                 $this->crear = 'false';
@@ -70,12 +72,10 @@ class TipoCostoController extends Component{
     }
 
     public function update($id){
-        $tipoCosto = tipoCosto::find($id);
+        if(!empty($this->nombre)){
+            $tipoCosto = tipoCosto::find($id);
 
-        if(true){
             $tipoCosto->nombre = $this->nombre;
-
-
             $tipoCosto->update();
 
             $this->mensajeError = '';
@@ -88,6 +88,9 @@ class TipoCostoController extends Component{
                 $this->mensajeError = 'Hubo Un Fallo Al Actualizarlo';
                 $this->tipoCostoEdit = '';
             }
+        }else{
+                $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+                $this->tipoCostoEdit = '';
         }
     }
 }

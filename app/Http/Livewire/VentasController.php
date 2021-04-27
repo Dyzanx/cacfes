@@ -8,9 +8,18 @@ use App\Models\Clientes;
 use App\Models\Categorias;
 use App\Models\Pagos;
 use App\Models\Observaciones;
+use App\Models\Generales;
 
 class VentasController extends Component{
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage'
+    ];
+    public $perPage = 10;
+    public $search;
+
     public $factura;
+
     public $categoria;
     public $cliente;
     public $cantidad;
@@ -19,59 +28,34 @@ class VentasController extends Component{
 
     public $fechaPago;
     public $pagoCliente;
-    public $tardanza;
-    public $saldo;
-
     public $notaOb;
 
-    public $crearOb = 'false';
     public $crear = 'false';
-    public $crearPago = 'false';
     public $mensajeSuccess;
     public $mensajeError;
-
-
-    public $ventaEdit = '';
-    public $pagoEdit = '';
-    public $obEdit = '';
-
 
     public $ventaDetalle = '';
     public $pagoDetalle = '';
     public $obDetalle = '';
 
+    public $notaDetalle;
+
+    public $ventaEdit = '';
+    public $pagoEdit = '';
+    public $obEdit = '';
+
     public function render(){
         return view('livewire.ventas', [
-            'ventas' => Ventas::paginate(10),
+            'ventas' => Ventas::where('factura', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
+            'pagos' => Pagos::where('factura', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
             'clientes' => Clientes::get(),
-            'pagos' => Pagos::get(),
-            'categorias' => Categorias::get()
+            'categorias' => Categorias::get(),
+            'general' => Generales::first()
         ]);
-    }
-
-    public function crearPago(){
-        $this->crearPago = 'true';
-        $this->crear = 'false';
-    }
-
-    public function crearOb($factura){
-        $this->ventaGen = Ventas::where('factura', '=', "$factura")->get();
-        $this->crearOb = Observaciones::where('factura', '=', "$factura")->get();
     }
 
     public function crear(){
         $this->crear = 'true';
-        $this->crearPago = 'false';
-    }
-
-    public function cancelar(){
-        $this->crear = 'false';
-        $this->ventaEdit = '';
-        $this->obEdit = '';
-        $this->pagoEdit = '';
-        $this->ventaEdit = '';
-        $this->crearPago = 'false';
-        $this->crearOb = 'false';
         $this->ventaDetalle = '';
     }
 
@@ -83,8 +67,7 @@ class VentasController extends Component{
 
     public function save(){
         if(!empty($this->factura && $this->categoria && $this->cliente && $this->cantidad && $this->precio
-        && $this->fecha && $this->fechaPago && $this->pagoCliente && $this->tardanza && $this->saldo 
-        && $this->notaOb)){
+        && $this->fecha && $this->fechaPago && $this->pagoCliente)){
             $venta = new Ventas();
             $ob = new Observaciones();
             $pago = new Pagos();
@@ -99,8 +82,6 @@ class VentasController extends Component{
             $pago->factura = $this->factura;
             $pago->fecha_pago = $this->fechaPago;
             $pago->pago_cliente = $this->pagoCliente;
-            $pago->tardanza = $this->tardanza;
-            $pago->saldo = $this->saldo;
 
             $ob->factura = $this->factura;
             $ob->nota = $this->notaOb;
@@ -115,6 +96,21 @@ class VentasController extends Component{
             if($venta->save() && $ob->save() && $pago->save()){
                 $this->mensajeSuccess = 'Venta Añadida Correctamente';
                 $this->crear = 'false';
+                $this->factura = '';
+                $this->cliente = '';
+                $this->categoria = '';
+                $this->cantidad = '';
+                $this->precio = '';
+                $this->fecha = '';
+
+                $this->factura = '';
+                $this->fechaPago = '';
+                $this->pagoCliente = '';
+                $this->tardanza = '';
+                $this->saldo = '';
+
+                $this->factura = '';
+                $this->notaOb = '';
             }else{
                 $this->mensajeError = 'Hubo Un Error Al Añadir La Venta';
                 $this->crear = 'false';
@@ -126,12 +122,12 @@ class VentasController extends Component{
     }
 
     public function borrar($factura){
-        $venta = Ventas::where('factura', '=', "$factura")->first();
-        $pago = Pagos::where('factura', '=', "$factura")->first();
-        $ob = Observaciones::where('factura', '=', "$factura")->first();
+        $venta = Ventas::where('factura', '=', "$factura");
+        $pago = Pagos::where('factura', '=', "$factura");
+        $ob = Observaciones::where('factura', '=', "$factura");
 
-        $pago->delete();
         $ob->delete();
+        $pago->delete();
         $venta->delete();
 
         if($venta->delete() && $ob->delete() && $pago->delete()){
@@ -149,12 +145,68 @@ class VentasController extends Component{
         $this->obDetalle = Observaciones::where('factura', '=', "$factura")->first();
     }
 
-    public function cambiarOb($factura){
-        $this->obEdit = Observaciones::where('factura', '=', "$factura")->first();
+    public function detallesNota($factura){
+        $this->obDetalle = Observaciones::where('factura', '=', "$factura")->first();
     }
 
-    public function cambiarPago($factura){
-        $this->pagoEdit = Pagos::where('factura', '=', "$factura")->first();
+    public function saveDetalleNota($factura){
+        if(!empty($this->notaDetalle)){
+            $ob = Observaciones::where('factura', '=', "$factura")->get();
+
+            $ob->nota = $this->notaDetalle;
+        //     $ob->update();
+
+        //     if($ob->update()){
+        //         $this->mensajeSuccess = 'Observacion Actualizada Correctamente';
+        //         $this->obDetalle = '';
+        //         $this->notaDetalle = '';
+        //     }else{
+        //         $this->mensajeError = 'Hubo Un Error Al Actualizar La Observacion';
+        //         $this->notaDetalle = '';
+        //         $this->obDetalle = '';
+        //     }
+        // }else{
+        //     $this->mensajeError = 'Es Necesario Una Nueva Nota Para Relizar La Actalización';
+        //     $this->obDetalle = '';
+        } 
+
+        return var_dump($factura);
+    }
+
+    public function cancelar(){
+        $this->crear = 'false';
+        $this->ventaEdit = '';
+        $this->obEdit = '';
+        $this->ventaEdit = '';
+        $this->ventaDetalle = '';
+        $this->pagoDetalle = '';
+        $this->obDetalle = '';
+
+        $this->factura = '';
+        $this->cliente = '';
+        $this->categoria = '';
+        $this->cantidad = '';
+        $this->precio = '';
+        $this->fecha = '';
+
+        $this->fechaPago = '';
+        $this->pagoCliente = '';
+        $this->tardanza = '';
+        $this->saldo = '';
+
+        $this->notaOb = '';
+    }
+
+    public function limpiarBusqueda(){
+        $this->search = '';
+        $this->perPage = 10;
+    }
+
+    public function cancelarDetalles(){
+        $this->ventaDetalle = '';
+        $this->pagoDetalle = '';
+        $this->obDetalle = '';
+        $this->notaDetalle = '';
     }
 
 }

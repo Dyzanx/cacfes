@@ -30,7 +30,7 @@
                                     <input type="text" wire:model="nombre" value="{{$tipoCostoEdit->nombre}}" placeholder="{{$tipoCostoEdit->nombre}}" name="nombre" id="nombre" autofocus autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     @else
                                     <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                                    <input type="text" wire:model="nombre" name="nombre" id="nombre" autofocus autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    <input type="text" wire:model="nombre" name="nombre" id="nombre" autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     @endif
                                 </div>
                                 </div>
@@ -78,26 +78,26 @@
                         </tr>
                     </thead>
                     @foreach($tipoCostos as $tipo)
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            {{$tipo->id}}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">
-                                    {{ $tipo->nombre }}
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{$tipo->id}}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">
+                                        {{ $tipo->nombre }}
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="" wire:click.prevent="editar({{$tipo->id}})"><i class="bi bi-pen bg-blue-400 hover:bg-blue-300 rounded text-lg text-white p-3"></i></a>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                        <a href="" wire:click.prevent="borrar({{$tipo->id}})"><i class="bi bi-trash bg-red-400 hover:bg-red-300 rounded text-lg text-white p-3"></i></a>
-                        </td>
-                        </tr>
-                    </tbody>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="" wire:click.prevent="editar({{$tipo->id}})"><i class="bi bi-pen bg-blue-400 hover:bg-blue-300 rounded text-lg text-white p-3"></i></a>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="" wire:click.prevent="borrar({{$tipo->id}})"><i class="bi bi-trash bg-red-400 hover:bg-red-300 rounded text-lg text-white p-3"></i></a>
+                            </td>
+                            </tr>
+                        </tbody>
                     @endforeach
                         </table>
                         @endif

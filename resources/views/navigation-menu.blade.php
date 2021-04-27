@@ -15,6 +15,12 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Inicio') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('cartera') }}" :active="request()->routeIs('cartera')">
+                        {{ __('Cartera') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('equipo') }}" :active="request()->routeIs('equipo')">
+                        {{ __('Equipo') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('ventas') }}" :active="request()->routeIs('ventas')">
                         {{ __('Ventas') }}
                     </x-jet-nav-link>
@@ -155,6 +161,12 @@
         <div class="pt-2 pb-3 space-y-1"> 
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Inicio') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('cartera') }}" :active="request()->routeIs('cartera')">
+                {{ __('Cartera') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('equipo') }}" :active="request()->routeIs('equipo')">
+                {{ __('Equipo') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('ventas') }}" :active="request()->routeIs('ventas')">
                 {{ __('Ventas') }}

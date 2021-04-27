@@ -2,10 +2,6 @@
 
 namespace App\Http\Livewire;
 
-
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use App\Models\Producto;
 use App\Models\tipoCosto;
@@ -52,8 +48,7 @@ class facturaCostosController extends Component{
             'productos' => Producto::orderBy('id', 'desc')
             ->where('direccion', 'LIKE', "%{$this->search}%")
             ->orWhere('cantidad', 'LIKE', "%{$this->search}%")
-            ->orWhere('valor_unitario', 'LIKE', "%{$this->search}%")
-            ->orWhere('descuento', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
+            ->orWhere('valor_unitario', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
 
             'items' => tipoCosto::orderBy('id', 'desc')->get(),
             'categorias' => Categorias::orderBy('id', 'desc')->get(),
@@ -84,6 +79,19 @@ class facturaCostosController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->productoEdit = '';
+
+        $this->fecha = '';
+        $this->item = '';
+        $this->categoria = '';
+        $this->cliente = '';
+        $this->cantidad = '';
+        $this->udMedida = '';
+        $this->valUnitario = '';
+        $this->descuento = '';
+        $this->direccion = '';
+        $this->proveedor = '';
+        $this->descripcion = '';
+        $this->observaciones = '';
     }
 
     public function editar($id){
@@ -111,12 +119,6 @@ class facturaCostosController extends Component{
             $producto->proveedor_id = $this->proveedor;
             $producto->descripcion = $this->descripcion;
             $producto->observacion = $this->observaciones;
-
-            if($this->image_path){
-                $image_path_name = time().$this->image_path->getClientOriginalName();
-                Storage::disk('productos')->put($image_path_name, File::get($this->image_path));
-                $producto->image_path = $image_path_name;
-            }
 
             $producto->save();
 
@@ -161,26 +163,54 @@ class facturaCostosController extends Component{
     }
 
     public function update($id){
-        $producto = Producto::find($id);
+        if(!empty($this->fecha || $this->item || $this->categoria || $this->cliente || $this->cantidad || 
+            $this->udMedida || $this->valUnitario || $this->descuento || $this->direccion || $this->proveedor
+            || $this->descripcion || $this->observaciones)){
 
-            $producto->fecha = $this->fecha;
-            $producto->item_id = $this->item;
-            $producto->categoria_id = $this->categoria;
-            $producto->cliente = $this->cliente;
-            $producto->cantidad = $this->cantidad;
-            $producto->unidad_medida = $this->udMedida;
-            $producto->valor_unitario = $this->valUnitario;
-            $producto->descuento = $this->descuento;
-            $producto->direccion = $this->direccion;
-            $producto->proveedor_id = $this->proveedor;
-            $producto->descripcion = $this->descripcion;
-            $producto->observacion = $this->observaciones;
+            $producto = Producto::find($id);
 
+            if(!empty($this->fecha)){
+                $producto->fecha = $this->fecha;
+            }
+            if(!empty($this->item)){
+                $producto->item_id = $this->item;
+            }
+            if(!empty($this->categoria)){
+                $producto->categoria_id = $this->categoria;
+            }
+            if(!empty($this->cliente)){
+                $producto->cliente = $this->cliente;
+            }
+            if(!empty($this->cantidad)){
+                $producto->cantidad = $this->cantidad;
+            }
+            if(!empty($this->udMedida)){
+                $producto->unidad_medida = $this->udMedida;
+            }
+            if(!empty($this->valUnitario)){
+                $producto->valor_unitario = $this->valUnitario;
+            }
+            if(!empty($this->descuento)){
+                $producto->descuento = $this->descuento;
+            }
+            if(!empty($this->direccion)){
+                $producto->direccion = $this->direccion;   
+            }
+            if(!empty($this->proveedor_id)){
+                $producto->proveedor_id = $this->proveedor;
+            }
+            if(!empty($this->descripcion)){
+                $producto->descripcion = $this->descripcion;
+            }
+            if(!empty($this->observaciones)){
+                $producto->observacion = $this->observaciones;
+            }
+    
             $producto->update();
-
+    
             $this->mensajeError = '';
             $this->mensajeSuccess = '';
-
+    
             if($producto->update()){
                 $this->mensajeSuccess = 'Producto Actualizado Correctamente';
                 $this->productoEdit = '';
@@ -188,5 +218,9 @@ class facturaCostosController extends Component{
                 $this->mensajeError = 'Hubo Un Fallo Al Actualizar El Producto';
                 $this->productoEdit = '';
             }
+        }else{
+            $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+            $this->productoEdit = '';
+        }
     }
 }

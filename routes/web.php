@@ -6,9 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/dashboard', App\Http\Livewire\DashboardController::class)->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/Clientes', App\Http\Livewire\ClientesController::class)->name('clientes');
@@ -24,3 +23,9 @@ Route::middleware(['auth:sanctum', 'verified'])
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/Ventas', App\Http\Livewire\VentasController::class)->name('ventas');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/EquipoTrabajo', App\Http\Livewire\EquipoTrabajoController::class)->name('equipo');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/Cartera', App\Http\Livewire\CarteraController::class)->name('cartera');

@@ -19,9 +19,7 @@
                         @endif
                         <hr>
 
-                        <form @if($productoEdit) 
-                        wire:submit.prevent="update({{$productoEdit->id}})"
-                        @else wire:submit.prevent="save()" @endif>
+                        <form>
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                     <div class="grid grid-cols-11 gap-6">
@@ -53,28 +51,7 @@
 
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="udMedida" class="block text-sm font-medium text-gray-700">Unidad De Medida</label>
-                                            <select name="udMedida" wire:model="udMedida" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full">
-                                                @if($productoEdit->unidad_medida)
-                                                    <option value="{{$productoEdit->unidad_medida}}" selected>{{$productoEdit->unidad_medida}}</option>
-                                                @else
-                                                    <option selected>Seleccione la unidad de medida</option>
-                                                @endif
-                                                <option value="GR">GR</option>
-                                                <option value="HR">HR</option>
-                                                <option value="KL">KL</option>
-                                                <option value="M Lineal">M Lineal</option>
-                                                <option value="M.O">M.O</option>
-                                                <option value="Min">Min</option>
-                                                <option value="MT">MT</option>
-                                                <option value="MT L">MT L</option>
-                                                <option value="Paño">Paño</option>
-                                                <option value="Par">Par</option>
-                                                <option value="PQ">PQ</option>
-                                                <option value="Tubo">Tubo</option>
-                                                <option value="UD">UD</option>
-                                                <option value="UN">UN</option>
-                                                <option value="YD">YD</option>
-                                            </select>
+                                            <input value="{{$productoEdit->unidad_medida}}" placeholder="{{$productoEdit->unidad_medida}}" type="text" wire:model="udMedida" name="udMedida" autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
 
                                         <div class="col-span-6 sm:col-span-3">
@@ -156,24 +133,7 @@
 
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="udMedida" class="block text-sm font-medium text-gray-700">Unidad De Medida</label>
-                                            <select name="udMedida" wire:model="udMedida" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full">
-                                                <option selected>Seleccione la unidad de medida</option>
-                                                <option value="GR">GR</option>
-                                                <option value="HR">HR</option>
-                                                <option value="KL">KL</option>
-                                                <option value="M Lineal">M Lineal</option>
-                                                <option value="M.O">M.O</option>
-                                                <option value="Min">Min</option>
-                                                <option value="MT">MT</option>
-                                                <option value="MT L">MT L</option>
-                                                <option value="Paño">Paño</option>
-                                                <option value="Par">Par</option>
-                                                <option value="PQ">PQ</option>
-                                                <option value="Tubo">Tubo</option>
-                                                <option value="UD">UD</option>
-                                                <option value="UN">UN</option>
-                                                <option value="YD">YD</option>
-                                            </select>
+                                            <input type="text" wire:model="udMedida" name="udMedida" autocomplete="off" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
 
                                         <div class="col-span-6 sm:col-span-3">
@@ -230,22 +190,12 @@
                                             <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
                                             <textarea wire:model="observaciones" class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" name="observaciones" id="observaciones" cols="60" rows="8"></textarea>
                                         </div>
-                                        
-                                        <div class="col-span-6 sm:col-span-3 bg-grey-lighter">
-                                            <label class="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-pink-400 cursor-pointer hover:bg-pink-400 hover:text-white">
-                                                <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                    <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                                                </svg>
-                                                <span class="mt-2 text-base leading-normal">Selecciona La Foto </span>
-                                                <input type='file' wire:model="image_path" class="hidden" />
-                                            </label>
-                                        </div>
                                         @endif
                                     </div>
                                     </div>
                                 </div>
                                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                                    @if($descuento != '' || $cantidad != '' || $valUnitario != '' || $direccion != '')
+                                    @if($descuento != '' || $cantidad != '' || $valUnitario != '' || $direccion != '' || $udMedida)
                                     <a href="" wire:click.prevent="limpiar()" class="mr-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
                                         Limpiar Campos
                                     </a>
@@ -272,17 +222,17 @@
                         <hr>
                         <div class="flex bg-white px-4 py-3 border-t border-gray-200 sm:px-6 pr-">
                             <input wire:model="search" type="text" 
-                            placeholder="Buscar Un Producto Por : Direccion - Cantidad - Valor Unitario - Descuento" 
+                            placeholder="Buscar Costo Por : Direccion - Cantidad - Valor Unitario" 
                             class="m-3 form-input rounded-md shadow-sm mt-1 block w-full focus:ring-green-400 focus:border-green-400">
                             <div class="m-3 form-input shadow-sm mt-1 block">
                                 <select name="perPage" wire:model="perPage" class="rounded-md focus:ring-green-400 focus:border-green-400 outline-none text-gray-500">
-                                    <option value="10">10 productos por pagina</option>
-                                    <option value="15">15 productos por pagina</option>
-                                    <option value="20">20 productos por pagina</option>
-                                    <option value="30">30 productos por pagina</option>
-                                    <option value="50">50 productos por pagina</option>
-                                    <option value="60">60 productos por pagina</option>
-                                    <option value="100">100 productos por pagina</option>
+                                    <option value="10">10 costos por pagina</option>
+                                    <option value="15">15 costos por pagina</option>
+                                    <option value="20">20 costos por pagina</option>
+                                    <option value="30">30 costos por pagina</option>
+                                    <option value="50">50 costos por pagina</option>
+                                    <option value="60">60 costos por pagina</option>
+                                    <option value="100">100 costos por pagina</option>
                                 </select>
                             </div>
                             @if($search != '' || $perPage != 10)
@@ -334,7 +284,7 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                {{$pro->id}}
+                                {{ number_format($pro->id) }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="ml-4">
@@ -374,10 +324,12 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        @if($pro->descuento >= 100)
-                                            $ {{ __(0)}}
-                                        @else
-                                            $ {{ __(number_format(round((($pro->valor_unitario*$pro->cantidad)*$pro->descuento)/100))) }}
+                                        $@if($pro->descuento >= 100)
+                                            {{ __(0)}}
+                                        @elseif($pro->descuento < 100 && $pro->descuento >= 1)
+                                            {{ __(number_format(round((($pro->valor_unitario*$pro->cantidad)*$pro->descuento)/100))) }}
+                                        @elseif($pro->descuento == 0)
+                                            {{ __(number_format($pro->valor_unitario*$pro->cantidad)) }}
                                         @endif
                                     </div>
                                 </div>
@@ -386,7 +338,7 @@
                                 <a href="" wire:click.prevent="editar({{$pro->id}})"><i class="bi bi-pen bg-blue-400 hover:bg-blue-300 rounded text-lg text-white p-3"></i></a>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="" wire:click.prevent="borrar({{$pro->id}})"><i class="bi bi-trash bg-red-400 hover:bg-red-300 rounded text-lg text-white p-3"></i></a>
+                                <a href="" wire:click.prevent="borrar({{$pro->id}})"><i class="bi bi-trash bg-red-400 hover:bg-red-300 rounded text-lg text-white p-3"></i></a>
                             </td>
                             </tr>
                         </tbody>
