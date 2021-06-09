@@ -13,6 +13,11 @@ class EquipoTrabajoController extends Component{
     public $search;
     public $perPage = 10;
 
+    public $tmpInicioLabores;
+    public $tmpFechaNacimiento;
+    public $tmpHoyLabor;
+    public $tmpHoyNacimiento;
+
     public $nombre;
     public $apellido;
     public $telefono;
@@ -20,8 +25,6 @@ class EquipoTrabajoController extends Component{
     public $mes;
     public $dia;
     public $inicioLabor;
-    public $edad;
-    public $dias;
 
     public $crear = 'false';
     public $mensajeSuccess;
@@ -32,7 +35,6 @@ class EquipoTrabajoController extends Component{
         return view('livewire.equipoTrabajo',[
             'miembros' => EquipoTrabajo::where('nombre', 'LIKE', "%{$this->search}%")
             ->orWhere('apellido', 'LIKE', "%{$this->search}%")
-            ->orWhere('edad', 'LIKE', "%{$this->search}%")
             ->orWhere('telefono', 'LIKE', "%{$this->search}%")->orderBy('id', 'desc')->paginate($this->perPage)
         ]);
     }
@@ -43,7 +45,7 @@ class EquipoTrabajoController extends Component{
 
     public function update($id){
         if(!empty($this->nombre || $this->apellido || $this->telefono || $this->fechaNacimiento || 
-            $this->mes || $this->dia || $this->inicioLabor || $this->edad || $this->dias)){
+            $this->mes || $this->dia || $this->inicioLabor)){
             $miembro = EquipoTrabajo::find($id);
 
             if(!empty($this->nombre)){
@@ -67,12 +69,6 @@ class EquipoTrabajoController extends Component{
             if(!empty($this->inicioLabor)){
                 $miembro->inicio_labores = $this->inicioLabor;
             }
-            if(!empty($this->edad)){
-                $miembro->edad = $this->edad;
-            }
-            if(!empty($this->dias)){
-                $miembro->dias = $this->dias;
-            }
     
             $miembro->update();
     
@@ -94,7 +90,7 @@ class EquipoTrabajoController extends Component{
     }
 
     public function save(){
-        if(!empty($this->nombre && $this->apellido && $this->telefono && $this->edad && $this->inicioLabor
+        if(!empty($this->nombre && $this->apellido && $this->telefono && $this->inicioLabor
             && $this->mes && $this->dia)){
             
             $miembro = new EquipoTrabajo();
@@ -106,8 +102,6 @@ class EquipoTrabajoController extends Component{
             $miembro->mes_cumpleaños = $this->mes;
             $miembro->dia_cumpleaños = $this->dia;
             $miembro->inicio_labores = $this->inicioLabor;
-            $miembro->edad = $this->edad;
-            $miembro->dias = $this->dias;
 
             $miembro->save();
 
@@ -121,8 +115,6 @@ class EquipoTrabajoController extends Component{
                 $this->mes = '';
                 $this->dia = '';
                 $this->inicioLabor = '';
-                $this->edad = '';
-                $this->dias = '';
             }else{
                 $this->mensajeError = 'Hubo Un Error Al Añadir El Miembro';
                 $this->crear = 'false';
@@ -155,8 +147,6 @@ class EquipoTrabajoController extends Component{
         $this->mes = '';
         $this->dia = '';
         $this->inicioLabor = '';
-        $this->edad = '';
-        $this->dias = '';
     }
 
     public function limpiarBusqueda(){

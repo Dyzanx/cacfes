@@ -18,13 +18,13 @@ class CategoriasController extends Component{
 
     public function render(){
         return view('livewire.categorias', [
-            'categorias' => Categorias::orderBy('id', 'desc')->paginate(20)
+            'categorias' => Categorias::orderBy('id', 'desc')->paginate(200)
         ]);
     }
 
     public function coste($id){
         $this->costeCatId = $id;
-        $this->coste = Ventas::where('categoria_id', '=', $this->costeCatId)->orderBy('categoria_id', 'desc')->get();
+        $this->coste = Ventas::where('categoria_id', '=', $id)->orderBy('categoria_id', 'desc')->get();
     }
 
     public function cancelarCoste(){

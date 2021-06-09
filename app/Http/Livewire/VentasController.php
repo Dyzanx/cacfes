@@ -26,6 +26,9 @@ class VentasController extends Component{
     public $precio;
     public $fecha;
 
+    public $tempFechaVenta;
+    public $tempFechaPago;
+
     public $fechaPago;
     public $pagoCliente;
     public $notaOb;
@@ -60,9 +63,9 @@ class VentasController extends Component{
     }
 
     public function editar($factura){
-        $ventaEdit = Ventas::where('factura', '=', "$factura");
-        $pagoEdit = Pagos::where('factura', '=', "$factura");
-        $obEdit = Observaciones::where('factura', '=', "$factura");
+        $ventaEdit = Ventas::where('factura', '=', $factura);
+        $pagoEdit = Pagos::where('factura', '=', $factura);
+        $obEdit = Observaciones::where('factura', '=', $factura);
     }
 
     public function save(){

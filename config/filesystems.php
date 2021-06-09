@@ -17,10 +17,10 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        'productos' => [
+        'diseños' => [
             'driver' => 'local',
-            'root' => storage_path('app/productos'),
-            'url' => env('APP_URL').'/storage/productos',
+            'root' => storage_path('app/diseños'),
+            'url' => env('APP_URL').'/storage/diseños',
             'visibility' => 'public',
         ],
 

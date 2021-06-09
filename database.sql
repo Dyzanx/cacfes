@@ -51,12 +51,13 @@ CREATE TABLE IF NOT EXISTS categorias(
 )Engine=InnoDb;
 
 CREATE TABLE IF NOT EXISTS ventas(
-    factura bigint PRIMARY KEY,
+    id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    factura bigint,
     cliente_id int(255),
     categoria_id int(255),
     cantidad int(255),
     precio int(255),
-    fecha_venta time,
+    fecha_venta date,
     created_at datetime,
     updated_at datetime,
     CONSTRAINT ventas_clientes FOREIGN KEY (cliente_id) REFERENCES clientes(id),
@@ -94,8 +95,6 @@ CREATE TABLE IF NOT EXISTS equipo_trabajos(
     mes_cumpleaños varchar(100),
     dia_cumpleaños int(10),
     inicio_labores date,
-    edad int(3),
-    dias int(255),
     updated_at datetime,
     created_at datetime
 )Engine=InnoDb;
@@ -105,7 +104,6 @@ CREATE TABLE IF NOT EXISTS carteras(
     cliente_id int(255),
     compra bigint,
     pago bigint,
-    saldo bigint,
     estado varchar(255),
     updated_at datetime,
     created_at datetime
@@ -130,3 +128,22 @@ CREATE TABLE IF NOT EXISTS operaciones(
     updated_at datetime,
     created_at datetime
 )Engine=InnoDb;
+
+CREATE TABLE IF NOT EXISTS diseños(
+    id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(255),
+    stock int(255),
+    descripcion TEXT,
+    precio int(255),
+    talla varchar(10),
+    image_path LONGTEXT,
+    updated_at datetime,
+    created_at datetime
+);
+
+CREATE TABLE IF NOT EXISTS tallas(
+    id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(255),
+    updated_at datetime,
+    created_at datetime
+);

@@ -1,3 +1,12 @@
+body::-webkit-scrollbar{
+    width: 8px;
+}
+body::-webkit-scrollbar-button:increment,body::-webkit-scrollbar-button {
+    display: none;
+} 
+body::-webkit-scrollbar-thumb{
+    background-color: #9D174D;
+}
 .modal-container{
-    background-color: rgba(000, 000, 000, 0.5);
+    background-color: #FEF3C7;
 }

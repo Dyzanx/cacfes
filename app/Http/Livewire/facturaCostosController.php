@@ -51,6 +51,7 @@ class facturaCostosController extends Component{
             ->orWhere('valor_unitario', 'LIKE', "%{$this->search}%")->paginate($this->perPage),
 
             'items' => tipoCosto::orderBy('id', 'desc')->get(),
+            'similarItems' => tipoCosto::where('nombre', 'LIKE', "{$this->item}"),
             'categorias' => Categorias::orderBy('id', 'desc')->get(),
             'proveedores' => Clientes::where('tipoCliente', '=', 'proveedor')->get(),
             'clientes' => Clientes::where('tipoCliente', '=', 'cliente')->get()

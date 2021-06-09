@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <img src="{{ asset('img/icono.png') }}" alt="Cacfe's Logo" class="w-24 rounded-full">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -46,7 +46,7 @@
             @endif
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                <a class="underline text-sm text-green-500 hover:text-green-400 mr-5" href="{{ route('login') }}">
                     {{ __('Ya Estas Registrado?') }}
                 </a>
 

@@ -17,8 +17,6 @@ class CarteraController extends Component{
     public $cliente;
     public $compra;
     public $pago;
-    public $saldo;
-    public $estado;
 
     public $crear = 'false';
     public $carteraEdit = '';
@@ -29,7 +27,6 @@ class CarteraController extends Component{
         return view('livewire.cartera', [
             'cartera' => Cartera::where('compra', 'LIKE', "%{$this->search}%")
             ->orWhere('pago', 'LIKE', "%{$this->search}%")
-            ->orWhere('saldo', 'LIKE', "%{$this->search}%")
             ->orderBy('id', 'desc')->paginate($this->perPage),
             
             'clientes' => Clientes::orderBy('id', 'desc')->get()
@@ -55,8 +52,10 @@ class CarteraController extends Component{
     }
 
     public function update($id){
-        if(!empty($this->cliente || $this->compra || $this->pago || $this->saldo
-            || $this->estado)){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+
+        if(!empty($this->cliente || $this->compra || $this->pago)){
                 
             $car = Cartera::find($id);
 
@@ -69,12 +68,6 @@ class CarteraController extends Component{
             if(!empty($this->pago)){
                 $car->pago = $this->pago;
             }
-            if(!empty($this->saldo)){
-                $car->saldo = $this->saldo;
-            }
-            if(!empty($this->estado)){
-                $car->estado = $this->estado;
-            }
 
             $car->update();
 
@@ -86,21 +79,26 @@ class CarteraController extends Component{
                 $this->carteraEdit = '';
             }
         }else{
-            $this->mensajeError = 'Hacer Cambios Es Necesario Para La Actualizacion';
+            $this->mensajeError = 'Hacer Cambios Es Necesario Para Actualizarlos';
             $this->carteraEdit = '';
         }
     }
 
     public function save(){
-        if(!empty($this->cliente && $this->compra && $this->pago && $this->saldo
-            && $this->estado)){
-            $car = new Cartera();
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+
+        if(!empty($this->cliente && $this->compra && $this->pago)){
+            $car = new Cartera();            
 
             $car->cliente_id = $this->cliente;
             $car->compra = $this->compra;
-            $car->pago = $this->pago;
-            $car->saldo = $this->saldo;
-            $car->estado = $this->estado;
+
+            if($this->pago >= $this->compra){
+                $car->pago = $this->compra;
+            }else{
+                $car->pago = $this->pago;
+            }
 
             $car->save();
                 
@@ -110,8 +108,6 @@ class CarteraController extends Component{
                 $this->cliente = '';
                 $this->compra = '';
                 $this->pago = '';
-                $this->saldo = '';
-                $this->estado = '';
             }else{
                 $this->mensajeError = 'Error Al Agregar El Elemento';
                 $this->crear = 'false';

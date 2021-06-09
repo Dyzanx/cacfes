@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="max-w-xl text-sm text-gray-600">
+        <div class="max-w-xl text-sm text-green-400">
             {{ __('Si es necesario, puede cerrar la sesión de todas las demás
              sesiones de su navegador en todos sus dispositivos. Algunas de sus 
              sesiones recientes se enumeran a continuación; sin embargo, esta lista 

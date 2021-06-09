@@ -15,7 +15,7 @@ class TipoCostoController extends Component{
 
     public function render(){
         return view('livewire.tipo-costo',[
-            'tipoCostos' => tipoCosto::orderBy('id', 'desc')->get()
+            'tipoCostos' => tipoCosto::orderBy('id', 'desc')->paginate(200)
         ]);
     }
 
@@ -89,7 +89,7 @@ class TipoCostoController extends Component{
                 $this->tipoCostoEdit = '';
             }
         }else{
-                $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+                $this->mensajeError = 'Son Necesarios Cambios Actuarlos';
                 $this->tipoCostoEdit = '';
         }
     }
