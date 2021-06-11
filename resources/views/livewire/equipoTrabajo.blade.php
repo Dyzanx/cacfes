@@ -1,3 +1,7 @@
+<head>
+   <title>{{ config('app.name') }} - Equipo de Trabajo</title>
+</head>
+
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-900 leading-tight">
         Cacfe's - Equipo De Trabajo
@@ -168,7 +172,7 @@
                             <i wire:click.prevent="crear()"
                                 class="bi bi-plus m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"></i>
                             <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Miebros</h1>
-                            <div class="flex bg-blue-300 px-4 py-3 sm:px-6 pr-">
+                            <div class="flex bg-blue-300 border-b-2 border-black px-4 py-3 sm:px-6 pr-">
                                 <input wire:model="search" type="text"
                                     placeholder="Buscar Un Miembro Por : Nombre - Apellido - Telefono"
                                     class="bg-green-200 focus:bg-green-300 m-3 form-input rounded-md shadow-sm mt-1 block w-full focus:ring-blue-500 focus:border-blue-500">

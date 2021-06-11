@@ -86,6 +86,8 @@ CREATE TABLE IF NOT EXISTS generales(
     direccion varchar(100)
 )Engine=InnoDb;
 
+INSERT INTO generales VALUES(0.19, 312 6656455, '+57', '0050026, Medellin, Antioquia');
+
 CREATE TABLE IF NOT EXISTS equipo_trabajos(
     id int(255) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nombre varchar(255),

@@ -1,3 +1,7 @@
+<head>
+   <title>{{ config('app.name') }} - Olvide mi Contraseña</title>
+</head>
+
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">

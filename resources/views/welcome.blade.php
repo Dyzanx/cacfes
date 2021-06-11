@@ -1,3 +1,7 @@
+<head>
+   <title>{{ config('app.name') }} - Home</title>
+</head>
+
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-900 leading-tight">
         Cacfe's - Inicio

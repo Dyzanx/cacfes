@@ -19,6 +19,7 @@ class VentasController extends Component{
     public $search;
 
     public $factura;
+    public $newfactura;
 
     public $categoria;
     public $cliente;
@@ -57,15 +58,79 @@ class VentasController extends Component{
         ]);
     }
 
+    public function update($factura){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+
+        if(!empty($this->newfactura || $this->categoria || $this->cliente || $this->cantidad || $this->precio || $this->fecha 
+        || $this->fechaPago || $this->pagoCliente || $this->notaOb)){
+
+            $ve = Ventas::where('factura', '=', "$factura")->firts();
+            $pa = Pagos::where('factura', '=', "$factura")->firts();
+            $no = Observaciones::where('factura', '=', "$factura")->firts();
+
+            if(!empty($this->newfactura)){
+                $ve->factura = $this->newfactura;
+                $pa->factura = $this->newfactura;
+                $no->factura = $this->newfactura;
+            }
+            if(!empty($this->categoria)){
+                $ve->categoria_id = $this->categoria;
+            }
+            if(!empty($this->cliente)){
+                $ve->cliente_id = $this->cliente;
+            }
+            if(!empty($this->cantidad)){
+                $ve->cantidad = $this->cantidad;
+            }
+            if(!empty($this->precio)){
+                $ve->precio = $this->precio;
+            }
+            if(!empty($this->fecha)){
+                $ve->fecha_venta = $this->fecha;
+            }
+            if(!empty($this->fechaPago)){
+                $pa->fecha_pago = $this->fechaPago;
+            }
+            if(!empty($this->pagoCliente)){
+                $pa->pago_cliente = $this->pagoCliente;
+            }
+            if(!empty($this->notaOb)){
+                $no->nota = $this->notaOb;
+            }
+
+            $ve->update();
+            $pa->update();
+            $no->update();
+
+            if($ve->update() && $pa->update() && $no->update()){
+                $this->mensajeError = 'Venta actualizada correctamente';
+                $this->ventaEdit = null;
+                $this->pagoEdit = null;
+                $this->obEdit = null;
+            }else{
+                $this->mensajeError = 'Hubo un error al actuaizar la venta';
+                $this->ventaEdit = null;
+                $this->pagoEdit = null;
+                $this->obEdit = null;
+            }
+        }else{
+            $this->mensajeError = 'Son necesarios cambios para actualizarlos';
+            $this->ventaEdit = null;
+            $this->pagoEdit = null;
+            $this->obEdit = null;
+        }
+    }
+
     public function crear(){
         $this->crear = 'true';
         $this->ventaDetalle = '';
     }
 
     public function editar($factura){
-        $ventaEdit = Ventas::where('factura', '=', $factura);
-        $pagoEdit = Pagos::where('factura', '=', $factura);
-        $obEdit = Observaciones::where('factura', '=', $factura);
+        $this->ventaEdit = Ventas::where('factura', '=', $factura)->first();
+        $this->pagoEdit = Pagos::where('factura', '=', $factura)->first();
+        $this->obEdit = Observaciones::where('factura', '=', $factura)->first();
     }
 
     public function save(){
@@ -146,34 +211,6 @@ class VentasController extends Component{
         $this->ventaDetalle = Ventas::where('factura', '=', "$factura")->first();
         $this->pagoDetalle = Pagos::where('factura', '=', "$factura")->first();
         $this->obDetalle = Observaciones::where('factura', '=', "$factura")->first();
-    }
-
-    public function detallesNota($factura){
-        $this->obDetalle = Observaciones::where('factura', '=', "$factura")->first();
-    }
-
-    public function saveDetalleNota($factura){
-        if(!empty($this->notaDetalle)){
-            $ob = Observaciones::where('factura', '=', "$factura")->get();
-
-            $ob->nota = $this->notaDetalle;
-        //     $ob->update();
-
-        //     if($ob->update()){
-        //         $this->mensajeSuccess = 'Observacion Actualizada Correctamente';
-        //         $this->obDetalle = '';
-        //         $this->notaDetalle = '';
-        //     }else{
-        //         $this->mensajeError = 'Hubo Un Error Al Actualizar La Observacion';
-        //         $this->notaDetalle = '';
-        //         $this->obDetalle = '';
-        //     }
-        // }else{
-        //     $this->mensajeError = 'Es Necesario Una Nueva Nota Para Relizar La Actalización';
-        //     $this->obDetalle = '';
-        } 
-
-        return var_dump($factura);
     }
 
     public function cancelar(){
