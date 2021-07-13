@@ -1,27 +1,3 @@
-CREATE TABLE IF NOT EXISTS productos(
-    id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    item_id int(255) NOT NULL,
-    categoria_id int(255) NOT NULL,
-    produccion varchar(255),
-    descripcion TEXT,
-    cantidad int(255) NOT NULL,
-    unidad_medida varchar(20),
-    valor_unitario int(255) NOT NULL,
-    cliente int(255) NOT NULL,
-    descuento int(255),
-    proveedor_id int(255) NOT NULL,
-    direccion varchar(255) NOT NULL,
-    fecha date NOT NULL,
-    observacion TEXT,
-    created_at datetime,
-    updated_at datetime,
-
-    CONSTRAINT productos_categorias FOREIGN KEY (categoria_id) REFERENCES categorias(id),
-    CONSTRAINT productos_tipo_costos FOREIGN KEY (item_id) REFERENCES tipo_costos(id),
-    CONSTRAINT productos_proveedores FOREIGN KEY (proveedor_id) REFERENCES clientes(id),
-    CONSTRAINT productos_clientes FOREIGN KEY (cliente) REFERENCES clientes(id)
-)Engine=InnoDb;
-
 CREATE TABLE IF NOT EXISTS clientes(
     id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(255),
@@ -48,6 +24,30 @@ CREATE TABLE IF NOT EXISTS categorias(
     nombre varchar(255),
     created_at datetime,
     updated_at datetime
+)Engine=InnoDb;
+
+CREATE TABLE IF NOT EXISTS productos(
+    id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    item_id int(255) NOT NULL,
+    categoria_id int(255) NOT NULL,
+    produccion varchar(255),
+    descripcion TEXT,
+    cantidad int(255) NOT NULL,
+    unidad_medida varchar(20),
+    valor_unitario int(255) NOT NULL,
+    cliente int(255) NOT NULL,
+    descuento int(255),
+    proveedor_id int(255) NOT NULL,
+    direccion varchar(255) NOT NULL,
+    fecha date NOT NULL,
+    observacion TEXT,
+    created_at datetime,
+    updated_at datetime,
+
+    CONSTRAINT productos_categorias FOREIGN KEY (categoria_id) REFERENCES categorias(id),
+    CONSTRAINT productos_tipo_costos FOREIGN KEY (item_id) REFERENCES tipo_costos(id),
+    CONSTRAINT productos_proveedores FOREIGN KEY (proveedor_id) REFERENCES clientes(id),
+    CONSTRAINT productos_clientes FOREIGN KEY (cliente) REFERENCES clientes(id)
 )Engine=InnoDb;
 
 CREATE TABLE IF NOT EXISTS ventas(
@@ -85,8 +85,6 @@ CREATE TABLE IF NOT EXISTS generales(
     indicativoPais varchar(10),
     direccion varchar(100)
 )Engine=InnoDb;
-
-INSERT INTO generales VALUES(0.19, 312 6656455, '+57', '0050026, Medellin, Antioquia');
 
 CREATE TABLE IF NOT EXISTS equipo_trabajos(
     id int(255) NOT NULL PRIMARY KEY AUTO_INCREMENT,

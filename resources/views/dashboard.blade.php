@@ -1,26 +1,21 @@
-<head>
-   <title>{{ config('app.name') }} - Dashboard</title>
-</head>
-
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-900 leading-tight">
+    <h2 class="font-semibold text-xl text-white leading-tight">
         Cacfe's - Tablero Administratvo
     </h2>
 </x-slot>
 
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-        <div class="bg-blue-300 overflow-hidden shadow-xl sm:rounded-lg">
-            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Cacfe's - Total De Venta Por Cliente
+        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
+            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Cacfe's - Total de ventas por cliente
             </h1>
             <div class="grid grid-cols-12">            
                 <div class="col-span-5 float-left">
-                    <h1 class="font-extrabold text-black p-3 text-xl text-center">Seleccione El(los) Cliente(s)</h1>
+                    <h1 class="font-extrabold text-black p-3 text-xl text-center">Seleccione el(los) cliente(s)</h1>
                     <form>
                         @csrf
                         <div class="shadow overflow-hidden">
-                            <div class="px-4 py-5 bg-blue-400 sm:p-6">
+                            <div class="px-4 py-5 bg-gray-100 sm:p-6">
                                 <div class="grid grid-cols-12 gap-6">
 
                                     <div class="col-span-11 sm:col-span-11">
@@ -33,6 +28,7 @@
                                             <option value="cliente">Buscar Un Cliente</option>
                                         </select>
                                     </div>
+                                    <input type="text" id="grafica-1-x" class="hidden" value="{{$ventas}}">
 
                                     <div class="col-span-1 sm:col-span-1">
                                         @if($filtroVentas != 'todos')
@@ -86,8 +82,6 @@
     </div>
 </div>
 
-{{ var_dump() }}
-
 <script>
 // plotly JS
 
@@ -126,3 +120,6 @@ var linealTrace2 = {
 var dataLineal = [linealTrace1, linealTrace2];
 Plotly.newPlot('lineal', dataLineal);
 </script>
+<head>
+   <title>{{ config('app.name') }} - Dashboard</title>
+</head>

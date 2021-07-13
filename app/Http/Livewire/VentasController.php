@@ -15,6 +15,8 @@ class VentasController extends Component{
         'search' => ['except' => ''],
         'perPage'
     ];
+
+    public $eliminar;
     public $perPage = 10;
     public $search;
 
@@ -58,6 +60,15 @@ class VentasController extends Component{
         ]);
     }
 
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($factura){
+        $this->eliminar = $factura;
+    }
+
     public function update($factura){
         $this->mensajeError = null;
         $this->mensajeSuccess = null;
@@ -69,35 +80,17 @@ class VentasController extends Component{
             $pa = Pagos::where('factura', '=', "$factura")->firts();
             $no = Observaciones::where('factura', '=', "$factura")->firts();
 
-            if(!empty($this->newfactura)){
-                $ve->factura = $this->newfactura;
-                $pa->factura = $this->newfactura;
-                $no->factura = $this->newfactura;
-            }
-            if(!empty($this->categoria)){
-                $ve->categoria_id = $this->categoria;
-            }
-            if(!empty($this->cliente)){
-                $ve->cliente_id = $this->cliente;
-            }
-            if(!empty($this->cantidad)){
-                $ve->cantidad = $this->cantidad;
-            }
-            if(!empty($this->precio)){
-                $ve->precio = $this->precio;
-            }
-            if(!empty($this->fecha)){
-                $ve->fecha_venta = $this->fecha;
-            }
-            if(!empty($this->fechaPago)){
-                $pa->fecha_pago = $this->fechaPago;
-            }
-            if(!empty($this->pagoCliente)){
-                $pa->pago_cliente = $this->pagoCliente;
-            }
-            if(!empty($this->notaOb)){
-                $no->nota = $this->notaOb;
-            }
+            $ve->factura = $this->newfactura != '' ? $this->newfactura : $ve->factura;
+            $pa->factura = $this->newfactura != '' ? $this->newfactura : $pa->factura;
+            $no->factura = $this->newfactura != '' ? $this->newfactura : $no->factura;
+
+            $ve->categoria_id = $this->categoria != '' ? $this->categoria : $ve->categoria_id;
+            $ve->cliente_id = $this->cliente != '' ? $this->cliente : $ve->cliente_id;
+            $ve->cantidad = $this->cantidad != '' ? $this->cantidad : $ve->cantidad;
+            $ve->precio = $this->precio != '' ? $this->precio : $ve->precio;
+            $ve->fecha_venta = $this->fecha != '' ? $this->fecha : $ve->fecha_venta;
+            $pa->fecha_pago = $this->fechaPago != '' ? $this->fechaPago : $pa->fecha_pago;
+            $pa->nota = $this->notaOb != '' ? $this->notaOb : $pa->nota;
 
             $ve->update();
             $pa->update();
@@ -162,7 +155,7 @@ class VentasController extends Component{
             $this->mensajeSuccess = '';
 
             if($venta->save() && $ob->save() && $pago->save()){
-                $this->mensajeSuccess = 'Venta Añadida Correctamente';
+                $this->mensajeSuccess = 'Venta añadida correctamente';
                 $this->crear = 'false';
                 $this->factura = '';
                 $this->cliente = '';
@@ -180,11 +173,11 @@ class VentasController extends Component{
                 $this->factura = '';
                 $this->notaOb = '';
             }else{
-                $this->mensajeError = 'Hubo Un Error Al Añadir La Venta';
+                $this->mensajeError = 'Hubo un error al añadir la venta';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'Los Campos Del * Son Obligatorios';
+            $this->mensajeError = 'Los campos del * son obligatorios';
             $this->crear = 'false';
         } 
     }
@@ -199,11 +192,13 @@ class VentasController extends Component{
         $venta->delete();
 
         if($venta->delete() && $ob->delete() && $pago->delete()){
-            $this->mensajeError = 'Hubo Un Error Al Borrar La Venta';
+            $this->mensajeError = 'Hubo en rrror al borrar la venta';
             $this->crear = 'false';
+            $this->eliminar = null;
         }else{
-            $this->mensajeSuccess = 'Venta Borrada Correctamente';
+            $this->mensajeSuccess = 'Venta borrada correctamente';
             $this->crear = 'false';
+            $this->eliminar = null;
         }
     }
 
@@ -221,6 +216,7 @@ class VentasController extends Component{
         $this->ventaDetalle = '';
         $this->pagoDetalle = '';
         $this->obDetalle = '';
+        $this->eliminar = null;
 
         $this->factura = '';
         $this->cliente = '';

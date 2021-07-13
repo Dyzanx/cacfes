@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-blue-300    ">
+<nav x-data="{ open: false }" class="bg-gray-700 border-b border-gray-400">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -9,7 +9,6 @@
                          <img src="{{ asset('img/logo.png') }}" alt="Cacfe's Logo" class="w-24">
                     </a>
                 </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')">
@@ -44,8 +43,7 @@
                         {{ __('Tallas') }}
                     </x-jet-nav-link>
                     @endif
-                    <x-jet-nav-link target="_blank"
-                        href="https://api.whatsapp.com/send?phone=573126656455&text=Hola Carlos, tengo una duda sobre algún servicio">
+                    <x-jet-nav-link href="{{ route('contacto') }}" :active="request()->routeIs('contacto')">
                         {{ __('Contactanos') }}
                     </x-jet-nav-link>
                 </div>
@@ -120,7 +118,7 @@
                             @else
                             <span class="inline-flex rounded-md">
                                 <button type="button"
-                                    class="inline-flex items-center px-3 py-2 border border-blue-400 text-sm leading-4 font-medium rounded-md text-gray-900 hover:text-gray-100 focus:text-gray-100 bg-blue-300 hover:bg-blue-400 hover:text-gray-100 focus:bg-blue-400 focus:outline-none transition ease-in-out duration-150">
+                                    class="inline-flex items-center px-3 py-2 border border-gray-400 text-sm leading-4 font-medium rounded-md text-gray-900 hover:text-gray-700 focus:text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none transition ease-in-out duration-150">
                                     {{ Auth::user()->name }}
                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor">
@@ -135,10 +133,10 @@
 
                         <x-slot name="content">
                             <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-100">
+                            <div class="block px-4 py-2 text-xs text-gray-600">
                                 {{ __('Cuenta') }}
                             </div>
-                            <div class="border-t border-blue-600"></div>
+                            <div class="border-t border-gray-700"></div>
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Perfil') }}
                             </x-jet-dropdown-link>
@@ -147,7 +145,7 @@
                                 {{ __('Tokens API') }}
                             </x-jet-dropdown-link>
                             @endif
-                            <div class="border-t border-blue-600"></div>
+                            <div class="border-t border-gray-700"></div>
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -161,8 +159,7 @@
                     </x-jet-dropdown>
                     @else
                     <span class="inline-flex float-right">
-                        <a href="/login"
-                            class="inline-flex items-center px-1 pt-1 font-medium leading-5 text-gray-900 hover:text-gray-100 hover:border-gray-100 focus:outline-none focus:text-gray-200 transition">
+                        <a href="{{route('login')}}" class="inline-flex items-center px-1 pt-1 font-medium leading-5 text-white hover:text-gray-100 hover:border-gray-100 focus:outline-none focus:text-gray-200 transition">
                             Iniciar Sesion
                         </a>
                     </span>
@@ -222,8 +219,7 @@
                 {{ __('Tallas') }}
             </x-jet-responsive-nav-link>
             @endif
-            <x-jet-responsive-nav-link target="_blank"
-                href="https://api.whatsapp.com/send?phone=573126656455&text=Hola Carlos, tengo una duda sobre algún servicio">
+            <x-jet-responsive-nav-link href="{{ route('contacto') }}" :active="request()->routeIs('contacto')">
                 {{ __('Contactanos') }}
             </x-jet-responsive-nav-link>
         </div>

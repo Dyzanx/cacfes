@@ -5,8 +5,11 @@ body::-webkit-scrollbar-button:increment,body::-webkit-scrollbar-button {
     display: none;
 } 
 body::-webkit-scrollbar-thumb{
-    background-color: #9D174D;
+    background-color: #6B7280;
 }
-.modal-container{
-    background-color: #FEF3C7;
+.hover-target:hover .hidden-footer-section{
+    display: block;
+}
+.-mt-38{
+    margin-top: -11rem !important;
 }

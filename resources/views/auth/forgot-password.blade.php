@@ -5,10 +5,12 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <img src="{{ asset('img/icono.png') }}" alt="Cacfe's Logo" class="w-24 rounded-full">
+            <a href="{{route('welcome')}}">
+                <img src="{{ asset('img/icono.png') }}" alt="Cacfe's Logo" class="w-24 rounded-full border border-blue-200">
+            </a>
         </x-slot>
 
-        <div class="mb-4 text-sm text-green-400 text-center pt-2">
+        <div class="mb-4 text-sm text-gray-900 text-center pt-2">
             {{ __('¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace para restablecer la contraseña que le permitirá elegir una nueva') }}
         </div>
 

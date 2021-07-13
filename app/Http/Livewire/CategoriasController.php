@@ -15,11 +15,21 @@ class CategoriasController extends Component{
     public $mensajeSuccess;
     public $mensajeError;
     public $categoriaEdit = '';
+    public $eliminar;
 
     public function render(){
         return view('livewire.categorias', [
             'categorias' => Categorias::orderBy('id', 'desc')->paginate(200)
         ]);
+    }
+
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($factura){
+        $this->eliminar = $factura;
     }
 
     public function coste($id){
@@ -54,15 +64,15 @@ class CategoriasController extends Component{
             $this->mensajeSuccess = '';
 
             if($categoria->save()){
-                $this->mensajeSuccess = 'Categoria Añadida Correctamente';
+                $this->mensajeSuccess = 'Categoria añadida correctamente';
                 $this->crear = 'false';
                 $this->nombre = '';
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Añadir La Categoria';
+                $this->mensajeError = 'Hubo un fallo al añadir la categoria';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'El Campo Del Nombre Es Obligatorio';
+            $this->mensajeError = 'El campo del nombre es obligatorio';
             $this->crear = 'false';
         } 
     }
@@ -72,10 +82,10 @@ class CategoriasController extends Component{
         $cat->delete();
 
         if($cat->delete()){
-            $this->mensajeError = 'Hubo Un Fallo Al Borrar La Categoria';
+            $this->mensajeError = 'Hubo un fallo al borrar la categoria';
             $this->crear = 'false';
         }else{
-            $this->mensajeSuccess = 'Categoria Borrada Correctamente';
+            $this->mensajeSuccess = 'Categoria borrada correctamente';
             $this->crear = 'false';
         }
     }
@@ -95,14 +105,14 @@ class CategoriasController extends Component{
             $this->mensajeSuccess = '';
 
             if($cat->update()){
-                $this->mensajeSuccess = 'Actualizado Correctamente';
+                $this->mensajeSuccess = 'Actualizado correctamente';
                 $this->categoriaEdit = '';
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Actualizarlo';
+                $this->mensajeError = 'Hubo un fallo al actualizarlo';
                 $this->categoriaEdit = '';
             }
         }else{
-            $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+            $this->mensajeError = 'Son necesarios cambios para la actualizacion';
             $this->categoriaEdit = '';
         }
     }

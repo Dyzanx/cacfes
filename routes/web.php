@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', App\Http\Livewire\WelcomeController::class)->name('welcome');
+Route::get('/', App\Http\Livewire\Welcome::class)->name('welcome');
+Route::get('/Contacto', App\Http\Livewire\ContactoController::class)->name('contacto');
 
 Route::middleware(['auth:sanctum', 'verified', 'authadmin'])
     ->get('/dashboard', App\Http\Livewire\DashboardController::class)->name('dashboard');

@@ -1,6 +1,6 @@
 <x-jet-action-section>
     <x-slot name="title">
-        {{ __('Sesionés De Navegador') }}
+        {{ __('Sesionés de navegador') }}
     </x-slot>
 
     <x-slot name="description">
@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="max-w-xl text-sm text-green-400">
+        <div class="max-w-xl text-sm text-gray-900">
             {{ __('Si es necesario, puede cerrar la sesión de todas las demás
              sesiones de su navegador en todos sus dispositivos. Algunas de sus 
              sesiones recientes se enumeran a continuación; sin embargo, esta lista 
@@ -44,7 +44,7 @@
                                     {{ $session->ip_address }},
 
                                     @if ($session->is_current_device)
-                                        <span class="text-green-500 font-semibold">{{ __('Este Dispositivo') }}</span>
+                                        <span class="text-green-500 font-semibold">{{ __('Este dispositivo') }}</span>
                                     @else
                                         {{ __('Ultima Actividad') }} {{ $session->last_active }}
                                     @endif
@@ -58,7 +58,7 @@
 
         <div class="flex items-center mt-5">
             <x-jet-button wire:click="confirmLogout" wire:loading.attr="disabled">
-                {{ __('Cerrar Otras Sesiones') }}
+                {{ __('Cerrar otras sesiones') }}
             </x-jet-button>
 
             <x-jet-action-message class="ml-3" on="loggedOut">
@@ -69,7 +69,7 @@
         <!-- Log Out Other Devices Confirmation Modal -->
         <x-jet-dialog-modal wire:model="confirmingLogout">
             <x-slot name="title">
-                {{ __('Cerrar Otras Sesiones De Navegador') }}
+                {{ __('Cerrar otras sesiones de navegador') }}
             </x-slot>
 
             <x-slot name="content">
@@ -94,7 +94,7 @@
                 <x-jet-button class="ml-2"
                             wire:click="logoutOtherBrowserSessions"
                             wire:loading.attr="disabled">
-                    {{ __('Cerrar Otras Sesiones') }}
+                    {{ __('Cerrar otras sesiones') }}
                 </x-jet-button>
             </x-slot>
         </x-jet-dialog-modal>

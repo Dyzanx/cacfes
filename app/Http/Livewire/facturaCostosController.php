@@ -32,7 +32,7 @@ class facturaCostosController extends Component{
     public $crear = 'false';
     public $mensajeSuccess;
     public $mensajeError;
-
+    public $eliminar;
     public $productoEdit = '';
     public $pEditItem = '';
     public $pEditCat = '';
@@ -58,6 +58,15 @@ class facturaCostosController extends Component{
         ]);
     }
 
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($id){
+        $this->eliminar = $id;
+    }
+
     public function crear(){
         $this->crear = 'true';
     }
@@ -80,6 +89,7 @@ class facturaCostosController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->productoEdit = '';
+        $this->eliminar = null;
 
         $this->fecha = '';
         $this->item = '';
@@ -103,51 +113,55 @@ class facturaCostosController extends Component{
     }
 
     public function save(){
-        $producto = new Producto();
-
         if(!empty($this->item && $this->categoria && $this->proveedor && $this->cantidad 
         && $this->valUnitario && $this->fecha && $this->cliente && $this->direccion)){
 
-            $producto->fecha = $this->fecha;
-            $producto->item_id = $this->item;
-            $producto->categoria_id = $this->categoria;
-            $producto->cliente = $this->cliente;
-            $producto->cantidad = $this->cantidad;
-            $producto->unidad_medida = $this->udMedida;
-            $producto->valor_unitario = $this->valUnitario;
-            $producto->descuento = $this->descuento;
-            $producto->direccion = $this->direccion;
-            $producto->proveedor_id = $this->proveedor;
-            $producto->descripcion = $this->descripcion;
-            $producto->observacion = $this->observaciones;
-
-            $producto->save();
-
-            $this->mensajeError = '';
-            $this->mensajeSuccess = '';
-
-            if($producto->save()){
-                $this->mensajeSuccess = 'Producto Añadido Correctamente';
-                $this->crear = 'false';
-
-                $this->fecha = '';
-                $this->item = '';
-                $this->categoria = '';
-                $this->cliente = '';
-                $this->cantidad = '';
-                $this->udMedida = '';
-                $this->valUnitario = '';
-                $this->descuento = '';
-                $this->direccion = '';
-                $this->proveedor = '';
-                $this->descripcion = '';
-                $this->observaciones = '';
+            if($this->cantidad > 0 && $this->valUnitario > 0){
+                $producto = new Producto();
+                $producto->fecha = $this->fecha;
+                $producto->item_id = $this->item;
+                $producto->categoria_id = $this->categoria;
+                $producto->cliente = $this->cliente;
+                $producto->cantidad = $this->cantidad;
+                $producto->unidad_medida = $this->udMedida;
+                $producto->valor_unitario = $this->valUnitario;
+                $producto->descuento = $this->descuento;
+                $producto->direccion = $this->direccion;
+                $producto->proveedor_id = $this->proveedor;
+                $producto->descripcion = $this->descripcion;
+                $producto->observacion = $this->observaciones;
+    
+                $producto->save();
+    
+                $this->mensajeError = '';
+                $this->mensajeSuccess = '';
+    
+                if($producto->save()){
+                    $this->mensajeSuccess = 'Producto añadido correctamente';
+                    $this->crear = 'false';
+    
+                    $this->fecha = '';
+                    $this->item = '';
+                    $this->categoria = '';
+                    $this->cliente = '';
+                    $this->cantidad = '';
+                    $this->udMedida = '';
+                    $this->valUnitario = '';
+                    $this->descuento = '';
+                    $this->direccion = '';
+                    $this->proveedor = '';
+                    $this->descripcion = '';
+                    $this->observaciones = '';
+                }else{
+                    $this->mensajeError = 'Hubo un fallo al crear el producto';
+                    $this->crear = 'false';
+                }
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Crear El Producto';
+                $this->mensajeError = 'los numeros no pueden ser negativos ni 0';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'Los Campos Del * Son Obligatorios';
+            $this->mensajeError = 'Los campos del * son obligatorios';
             $this->crear = 'false';
         }
     }
@@ -157,9 +171,11 @@ class facturaCostosController extends Component{
         $producto->delete();
 
         if($producto->delete()){
-            $this->mensajeError = 'Hubo Un Fallo Al Borrar El Producto';
+            $this->mensajeError = 'Hubo un fallo al borrar el producto';
+            $this->eliminar = null;
         }else{
-            $this->mensajeSuccess = 'Producto Borrado Correctamente';
+            $this->mensajeSuccess = 'Producto borrado correctamente';
+            $this->eliminar = null;
         }
     }
 
@@ -170,42 +186,18 @@ class facturaCostosController extends Component{
 
             $producto = Producto::find($id);
 
-            if(!empty($this->fecha)){
-                $producto->fecha = $this->fecha;
-            }
-            if(!empty($this->item)){
-                $producto->item_id = $this->item;
-            }
-            if(!empty($this->categoria)){
-                $producto->categoria_id = $this->categoria;
-            }
-            if(!empty($this->cliente)){
-                $producto->cliente = $this->cliente;
-            }
-            if(!empty($this->cantidad)){
-                $producto->cantidad = $this->cantidad;
-            }
-            if(!empty($this->udMedida)){
-                $producto->unidad_medida = $this->udMedida;
-            }
-            if(!empty($this->valUnitario)){
-                $producto->valor_unitario = $this->valUnitario;
-            }
-            if(!empty($this->descuento)){
-                $producto->descuento = $this->descuento;
-            }
-            if(!empty($this->direccion)){
-                $producto->direccion = $this->direccion;   
-            }
-            if(!empty($this->proveedor_id)){
-                $producto->proveedor_id = $this->proveedor;
-            }
-            if(!empty($this->descripcion)){
-                $producto->descripcion = $this->descripcion;
-            }
-            if(!empty($this->observaciones)){
-                $producto->observacion = $this->observaciones;
-            }
+            $producto->fecha = $this->fecha != '' ? $this->fecha : $producto->fecha;
+            $producto->item_id = $this->item != '' ? $this->item : $producto->item_id;
+            $producto->categoria_id = $this->categoria != '' ? $this->categoria : $producto->categoria_id;
+            $producto->fecha = $cliente->cliente != '' ? $this->cliente : $producto->cliente;
+            $producto->cantidad = $this->cantidad != '' ? $this->cantidad : $producto->cantidad;
+            $producto->unidad_medida = $this->udMedida != '' ? $this->udMedida : $producto->unidad_medida;
+            $producto->valor_unitario = $this->valUnitario != '' ? $this->valUnitario : $producto->valor_unitario;
+            $producto->descuento = $this->descuento != '' ? $this->descuento : $producto->descuento;
+            $producto->direccion = $this->direccion != '' ? $this->direccion : $producto->direccion;
+            $producto->proveedor_id = $this->proveedor != '' ? $this->proveedor : $producto->proveedor_id;
+            $producto->descripcion = $this->descripcion != '' ? $this->descripcion : $producto->descripcion;
+            $producto->observacion = $this->observaciones != '' ? $this->observaciones : $producto->observacion;
     
             $producto->update();
     
@@ -213,14 +205,14 @@ class facturaCostosController extends Component{
             $this->mensajeSuccess = '';
     
             if($producto->update()){
-                $this->mensajeSuccess = 'Producto Actualizado Correctamente';
+                $this->mensajeSuccess = 'Producto actualizado correctamente';
                 $this->productoEdit = '';
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Actualizar El Producto';
+                $this->mensajeError = 'Hubo un fallo al actualizar el producto';
                 $this->productoEdit = '';
             }
         }else{
-            $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+            $this->mensajeError = 'Son necesarios cambios para la actualizacion';
             $this->productoEdit = '';
         }
     }

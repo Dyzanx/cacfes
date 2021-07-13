@@ -9,6 +9,7 @@ class TipoCostoController extends Component{
     public $nombre;
 
     public $crear = 'false';
+    public $eliminar;
     public $mensajeSuccess;
     public $mensajeError;
     public $tipoCostoEdit = '';
@@ -19,6 +20,15 @@ class TipoCostoController extends Component{
         ]);
     }
 
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($factura){
+        $this->eliminar = $factura;
+    }
+
     public function crear(){
         $this->crear = 'true';
     }
@@ -26,6 +36,7 @@ class TipoCostoController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->tipoCostoEdit = '';
+        $this->eliminar = null;
         $this->nombre = '';
     }
 
@@ -41,15 +52,15 @@ class TipoCostoController extends Component{
             $this->mensajeSuccess = '';
 
             if($tipoCosto->save()){
-                $this->mensajeSuccess = 'Añadido Correctamente';
+                $this->mensajeSuccess = 'Añadido correctamente';
                 $this->crear = 'false';
                 $this->nombre = '';
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Añadirlo';
+                $this->mensajeError = 'Hubo un fallo al añadirlo';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'El Campo Del Nombre Es Obligatorio';
+            $this->mensajeError = 'El campo del nombre es obligatorio';
             $this->crear = 'false';
         } 
     }
@@ -59,10 +70,10 @@ class TipoCostoController extends Component{
         $tipoCosto->delete();
 
         if($tipoCosto->delete()){
-            $this->mensajeError = 'Hubo Un Fallo Al Borrarlo';
+            $this->mensajeError = 'Hubo un fallo al borrarlo';
             $this->crear = 'false';
         }else{
-            $this->mensajeSuccess = 'Borrado Correctamente';
+            $this->mensajeSuccess = 'Borrado correctamente';
             $this->crear = 'false';
         }
     }
@@ -82,14 +93,14 @@ class TipoCostoController extends Component{
             $this->mensajeSuccess = '';
 
             if($tipoCosto->update()){
-                $this->mensajeSuccess = 'Actualizado Correctamente';
+                $this->mensajeSuccess = 'Actualizado correctamente';
                 $this->tipoCostoEdit = '';
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Actualizarlo';
+                $this->mensajeError = 'Hubo un fallo al actualizarlo';
                 $this->tipoCostoEdit = '';
             }
         }else{
-                $this->mensajeError = 'Son Necesarios Cambios Actuarlos';
+                $this->mensajeError = 'Son necesarioscCambios actuarlos';
                 $this->tipoCostoEdit = '';
         }
     }

@@ -7,8 +7,6 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\LoginRateLimiter;
-use Illuminate\Support\Facades\Auth;
-use App\Providers\RouteServiceProvider;
 
 class AttemptToAuthenticate
 {
@@ -56,18 +54,12 @@ class AttemptToAuthenticate
             $request->only(Fortify::username(), 'password'),
             $request->filled('remember'))
         ) {
-            if(Auth::user()->type != 'admin'){
-                session(['type'=>'user']);
-                return redirect()->route('welcome');
-            }else if(Auth::user()->type === 'admin'){
-                session(['type'=>'admin']);
-                return redirect()->route('welcome');
-            }
             return $next($request);
         }
 
         $this->throwFailedAuthenticationException($request);
     }
+
     /**
      * Attempt to authenticate using a custom callback.
      *

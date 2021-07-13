@@ -1,9 +1,5 @@
-<head>
-   <title>{{ config('app.name') }} - Home</title>
-</head>
-
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-900 leading-tight">
+    <h2 class="font-semibold text-xl text-white leading-tight">
         Cacfe's - Inicio
     </h2>
 </x-slot>
@@ -45,7 +41,6 @@
                                                     <input type="number" wire:model="stock" autocomplete="off"
                                                         class="focus:bg-pink-300 bg-pink-200 mt-1 focus:ring-blue-400 focus:border-blue-400 block w-full shadow-sm sm:text-sm rounded-md">
                                                 </div>
-
 
                                                 <div class="col-span-12 sm:col-span-2">
                                                     <label for="direccion"
@@ -207,7 +202,7 @@
                                                                 <path d="M0 0h24v24H0z" fill="none" />
                                                                 <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
                                                             </svg>
-                                                            <input wire:change="$emit('fileChoosen')" id="imagen"
+                                                            <input wire:change="$emit('fileChoosen')" id="imagen" accept="image/*"
                                                                 class="absolute block opacity-0 pin-r pin-t" type="file"
                                                                 name="vacancyImageFiles" @change="fileName" multiple>
                                                             <span class="ml-2 cursor-pointer">Cargar Imagen</span>
@@ -348,10 +343,26 @@
 </div>
 @endif
 
+<div class="rounded-md bg-gray-100 mx-5 my-5 overflow-hidden sm:w-1/2">
+    <div class="carousel">
+        <div class="carousel-contenedor">
+            <div class="carousel-lista">
+            @foreach($diseños as $di)
+                <img class="carousel-elemento max-h-72" src="{{$di->image_path}}" alt="Diseño - {{$di->nombre}}">
+            @endforeach
+            </div>
+            <div class="buttons-container w-full mx-auto bg-gray-600 text-center p-2">
+                <button aria-label="Anterior" class="carousel-anterior focus:outline-none text-center bg-white hover:text-white hover:bg-gray-500 rounded-full p-2 w-10 mx-4 transition"><i class="bi bi-chevron-left"></i></button>
+                <button aria-label="Siguiente" class="carousel-siguiente focus:outline-none text-center bg-white hover:text-white hover:bg-gray-500 rounded-full p-2 w-10 mx-4 transition"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+        <div role="tablist" class="carousel-indicadores w-full bg-gray-600 border-t border-gray-400"></div>
+    </div>
+</div>
 
-<div class="rounded-md bg-yellow-100 mx-5 mt-2">
+<div class="rounded-md bg-gray-100 mx-5 my-5 pb-1">
     @if(Auth::user() && Auth::user()->type != 'user')
-    <i wire:click.prevent="crear()"
+    <i wire:click.prevent="crear()" title="agregar nuevo diseño"
         class="bi bi-calendar-plus m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-non"></i>
     @endif
     <h1 class="font-bold text-black text-xl p-3 sm:text-3xl border-b-2 border-black text-center sm:text-left">Ultimos
@@ -368,7 +379,7 @@
         <div class="rounded-md bg-yellow-200 overflow-hidden col-span-12 sm:col-span-3 text-center">
             <img src="{{ $di->image_path }}" class="w-full max-h-40">
             <h2 class="text-xl font-bold text-gray-900 py-2">{{ $di->nombre }} - <span class="uppercase">{{ $di->talla }}</span></h2>
-            <a href="" wire:click.prevent="detalles({{ $di->id }})"
+            <a href=""  wire:click.prevent="detallesM({{ $di->id }})"
                 class="focu:outline-none py-2 px-3 m-2 px-6 text-white bg-pink-800 hover:bg-pink-900 block rounded">Ver
                 más detalles</a>
         </div>
@@ -376,6 +387,18 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/glider-js@1.7.7/glider.min.js"></script>
+<script>
+    new Glider(document.querySelector('.carousel-lista'), {
+        slidesToShow: 1,
+        dots: '.carousel-indicadores',
+        draggable: true,
+        arrows: {
+            prev: '.carousel-anterior',
+            next: '.carousel-siguiente'
+        }
+    });
+</script>
 <script>
 window.livewire.on('fileChoosen', pistId => {
     let inputField = document.getElementById('imagen');
@@ -385,8 +408,11 @@ window.livewire.on('fileChoosen', pistId => {
     reader.onload = () => {
         window.livewire.emit('fileUpload', reader.result);
     }
-
+    
     reader.readAsDataURL(file);
-
 });
 </script>
+
+<head>
+   <title>{{ config('app.name') }} - Home</title>
+</head>

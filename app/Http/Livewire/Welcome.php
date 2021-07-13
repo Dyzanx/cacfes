@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\Diseños;
 use App\Models\Tallas;
 
-class WelcomeController extends Component{
+class Welcome extends Component{
     public $crear;
     public $detalles;
     public $mensajeSuccess;
@@ -101,8 +101,11 @@ class WelcomeController extends Component{
         $this->editar = Diseños::find($id);
     }
 
-    public function detalles($id){
+    public function detallesM($id){
         $this->detalles = Diseños::find($id);
+    }
+    public function hola(){
+        $this->detalles = "hola";
     }
 
     public function handleFileUpload($imageData){

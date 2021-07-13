@@ -28,11 +28,7 @@ class ClientesController extends Component{
     public $mensajeSuccess;
     public $mensajeError;
     public $clienteEdit = '';
-
-    public function limpiarBusqueda(){
-        $this->search = '';
-        $this->perPage = 10;
-    }
+    public $eliminar;
 
     public function render(){
         return view('livewire.clientes', [
@@ -45,6 +41,20 @@ class ClientesController extends Component{
         ]);
     }
 
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($factura){
+        $this->eliminar = $factura;
+    }
+
+    public function limpiarBusqueda(){
+        $this->search = '';
+        $this->perPage = 10;
+    }
+
     public function crear(){
         $this->crear = 'true';
     }
@@ -52,6 +62,7 @@ class ClientesController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->clienteEdit = '';
+        $this->eliminar = null;
 
         $this->nombre = '';
         $this->celular = '';
@@ -86,7 +97,7 @@ class ClientesController extends Component{
             $this->mensajeSuccess = '';
 
             if($cliente->save()){
-                $this->mensajeSuccess = 'Cliente Añadido Correctamente';
+                $this->mensajeSuccess = 'Cliente añadido correctamente';
                 $this->crear = 'false';
 
                 $this->nombre = '';
@@ -101,11 +112,11 @@ class ClientesController extends Component{
                 $this->tipoBoleta = '';
 
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Añadir El Cliente';
+                $this->mensajeError = 'Hubo un fallo al añadir el cliente';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'Los Campos Del * Son Obligatorios';
+            $this->mensajeError = 'Los campos del * son obligatorios';
             $this->crear = 'false';
         }
     }
@@ -115,11 +126,13 @@ class ClientesController extends Component{
         $cliente->delete();
 
         if($cliente->delete()){
-            $this->mensajeError = 'Hubo Un Fallo Al Borrar El Cliente';
+            $this->mensajeError = 'Hubo un fallo al borrar el cliente';
             $this->crear = 'false';
+            $this->eliminar = null;
         }else{
-            $this->mensajeSuccess = 'Cliente Borrado Correctamente';
+            $this->mensajeSuccess = 'Cliente borrado correctamente';
             $this->crear = 'false';
+            $this->eliminar = null;
             
         }
     }
@@ -133,27 +146,13 @@ class ClientesController extends Component{
             $this->contacto || $this->observaciones || $this->tipoBoleta)){
             $cliente = Clientes::find($id);
 
-            if(!empty($this->nombre)){
-                $cliente->nombre = $this->nombre;
-            }
-            if(!empty($this->celular)){
-                $cliente->celular = $this->celular;
-            }
-            if(!empty($this->direccionEntrega)){
-                $cliente->direccion_entrega = $this->direccionEntrega;
-            }
-            if(!empty($this->telefono)){
-                $cliente->telefono = $this->telefono;
-            }
-            if(!empty($this->contacto)){
-                $cliente->contacto = $this->contacto;
-            }
-            if(!empty($this->observaciones)){
-                $cliente->observaciones = $this->observaciones;
-            }
-            if(!empty($this->tipoBoleta)){
-                $cliente->tipoBoleteria = $this->tipoBoleta;
-            }
+            $cliente->nombre = $this->nombre != '' ? $this->nombre : $cliente->nombre;
+            $cliente->celular = $this->celular != '' ? $this->celular : $cliente->celular;
+            $cliente->direccion_entrega = $this->direccionEntrega != '' ? $this->direccionEntrega : $cliente->direccion_entrega;
+            $cliente->telefono = $this->telefono != '' ? $this->telefono : $cliente->telefono;
+            $cliente->contacto = $this->contacto != '' ? $this->contacto : $cliente->contacto;
+            $cliente->observaciones = $this->observaciones != '' ? $this->observaciones : $cliente->observaciones;
+            $cliente->tipoBoleteria = $this->tipoBoleta != '' ? $this->tipoBoleta : $cliente->tipoBoleteria;
 
             $cliente->update();
 
@@ -161,14 +160,14 @@ class ClientesController extends Component{
             $this->mensajeSuccess = '';
 
             if($cliente->update()){
-                $this->mensajeSuccess = 'Cliente Actualizado Correctamente';
+                $this->mensajeSuccess = 'Cliente actualizado correctamente';
                 $this->clienteEdit = '';
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Actualizar El Cliente';
+                $this->mensajeError = 'Hubo un fallo al actualizar el cliente';
                 $this->clienteEdit = '';
             }
         }else{
-            $this->mensajeError = 'Son Necesarios Cambios Para La Actualizacion';
+            $this->mensajeError = 'Son necesarios cambios para la actualizacion';
             $this->clienteEdit = '';
         }
     }

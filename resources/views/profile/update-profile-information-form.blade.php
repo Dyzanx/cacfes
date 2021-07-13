@@ -1,6 +1,6 @@
 <x-jet-form-section submit="updateProfileInformation">
     <x-slot name="title">
-        {{ __('Informacion De Perfil') }}
+        {{ __('Informacion de perfil') }}
     </x-slot>
 
     <x-slot name="description">
@@ -10,7 +10,7 @@
     <x-slot name="form">
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-            <div x-data="{photoName: null, photoPreview: null}" class="bg-yellow-200 col-span-6 sm:col-span-4">
+            <div x-data="{photoName: null, photoPreview: null}" class="bg-gray-200 col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
                             wire:model="photo"
@@ -21,8 +21,7 @@
                                     reader.onload = (e) => {
                                         photoPreview = e.target.result;
                                     };
-                                    reader.readAsDataURL($refs.photo.files[0]);
-                            " />
+                                    reader.readAsDataURL($refs.photo.files[0]);"/>
 
                 <x-jet-label for="photo" value="{{ __('Foto') }}" />
 

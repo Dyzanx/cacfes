@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckUser{
     /**
@@ -14,7 +15,7 @@ class CheckUser{
      * @return mixed
      */
     public function handle(Request $request, Closure $next){
-        if(session('type') === 'admin'){
+        if(Auth::user()->type == 'admin'){
             return $next($request);
         }else{
             session()->flush();

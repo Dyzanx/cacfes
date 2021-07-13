@@ -25,6 +25,7 @@ class EquipoTrabajoController extends Component{
     public $mes;
     public $dia;
     public $inicioLabor;
+    public $eliminar;
 
     public $crear = 'false';
     public $mensajeSuccess;
@@ -43,45 +44,36 @@ class EquipoTrabajoController extends Component{
         $this->miembroEdit = EquipoTrabajo::find($id);
     }
 
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($id){
+        $this->eliminar = $id;
+    }
+
     public function update($id){
-        if(!empty($this->nombre || $this->apellido || $this->telefono || $this->fechaNacimiento || 
-            $this->mes || $this->dia || $this->inicioLabor)){
+        if(!empty($this->nombre || $this->apellido || $this->telefono || $this->fechaNacimiento || $this->mes || $this->dia || $this->inicioLabor)){
             $miembro = EquipoTrabajo::find($id);
 
-            if(!empty($this->nombre)){
-                $miembro->nombre = $this->nombre;
-            }
-            if(!empty($this->apellido)){
-                $miembro->apellido = $this->apellido;
-            }
-            if(!empty($this->telefono)){
-                $miembro->telefono = $this->telefono;
-            }
-            if(!empty($this->fechaNacimiento)){
-                $miembro->fecha_nacimiento = $this->fechaNacimiento;
-            }
-            if(!empty($this->mes)){
-                $miembro->mes_cumpleaños = $this->mes;
-            }
-            if(!empty($this->dia)){
-                $miembro->dia_cumpleaños = $this->dia;
-            }
-            if(!empty($this->inicioLabor)){
-                $miembro->inicio_labores = $this->inicioLabor;
-            }
+            $miembro->nombre = $this->nombre != '' ? $this->nombre : $miembro->nombre;
+            $miembro->apellido = $this->apellido != '' ? $this->apellido : $miembro->apellido;
+            $miembro->telefono = $this->telefono != '' ? $this->telefono : $miembro->telefono;
+            $miembro->fecha_nacimiento = $this->fechaNacimiento != '' ? $this->fechaNacimiento : $miembro->fecha_nacimiento;
+            $miembro->mes_cumpleaños = $this->mes != '' ? $this->mes : $miembro->mes_cumpleaños;
+            $miembro->dia_cumpleaños = $this->dia != '' ? $this->dia : $miembro->dia_cumpleaños;
+            $miembro->inicio_labores = $this->inicioLabor != '' ? $this->inicioLabor : $miembro->inicio_labores;
     
             $miembro->update();
     
             if($miembro->update()){
-                $this->mensajeSuccess = 'Miembro Actualizado Correctamente';
+                $this->mensajeSuccess = 'Miembro actualizado correctamente';
                 $this->miembroEdit = '';
             }else{
-                $this->mensajeError = 'Hubo Un Error Al Actualizar El Miembro';
+                $this->mensajeError = 'Hubo un error al actualizar el miembro';
                 $this->miembroEdit = '';
             }
-        }else{
-            $this->mensajeError = 'Son Necesarios Cambios Para Completar La Actualizacion';
-            $this->miembroEdit = '';
         }
     }
 
@@ -90,37 +82,40 @@ class EquipoTrabajoController extends Component{
     }
 
     public function save(){
-        if(!empty($this->nombre && $this->apellido && $this->telefono && $this->inicioLabor
-            && $this->mes && $this->dia)){
-            
-            $miembro = new EquipoTrabajo();
+        if(!empty($this->nombre && $this->apellido && $this->telefono && $this->inicioLabor && $this->mes && $this->dia)){
+            if($this->telefono > 0 && $this->mes > 0 && $this->dia > 0){
+                $miembro = new EquipoTrabajo();
 
-            $miembro->nombre = $this->nombre;
-            $miembro->apellido = $this->apellido;
-            $miembro->telefono = $this->telefono;
-            $miembro->fecha_nacimiento = $this->fechaNacimiento;
-            $miembro->mes_cumpleaños = $this->mes;
-            $miembro->dia_cumpleaños = $this->dia;
-            $miembro->inicio_labores = $this->inicioLabor;
-
-            $miembro->save();
-
-            if($miembro->save()){
-                $this->mensajeSuccess = 'Miembro Añadido Correctamente';
-                $this->crear = 'false';
-                $this->nombre = '';
-                $this->apellido = '';
-                $this->telefono = '';
-                $this->fechaNacimiento = '';
-                $this->mes = '';
-                $this->dia = '';
-                $this->inicioLabor = '';
+                $miembro->nombre = $this->nombre;
+                $miembro->apellido = $this->apellido;
+                $miembro->telefono = $this->telefono;
+                $miembro->fecha_nacimiento = $this->fechaNacimiento;
+                $miembro->mes_cumpleaños = $this->mes;
+                $miembro->dia_cumpleaños = $this->dia;
+                $miembro->inicio_labores = $this->inicioLabor;
+    
+                $miembro->save();
+    
+                if($miembro->save()){
+                    $this->mensajeSuccess = 'Miembro añadido correctamente';
+                    $this->crear = 'false';
+                    $this->nombre = '';
+                    $this->apellido = '';
+                    $this->telefono = '';
+                    $this->fechaNacimiento = '';
+                    $this->mes = '';
+                    $this->dia = '';
+                    $this->inicioLabor = '';
+                }else{
+                    $this->mensajeError = 'Hubo un error al añadir el miembro';
+                    $this->crear = 'false';
+                }
             }else{
-                $this->mensajeError = 'Hubo Un Error Al Añadir El Miembro';
+                $this->mensajeError = 'Los numeros no pueden ser negativos ni empezar por 0';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'Los Campos Del * Son Obligatorios';
+            $this->mensajeError = 'Los campos del * son obligatorios';
             $this->crear = 'false';
         }
     }
@@ -130,16 +125,18 @@ class EquipoTrabajoController extends Component{
         $miembro->delete();
 
         if($miembro->delete()){
-            $this->mensajeError = 'Hubo Un Error Al Borrar El Miembro';
+            $this->mensajeError = 'Hubo un error al borrar el Miembro';
+            $this->eliminar = null;
         }else{
-            $this->mensajeSuccess = 'Miembro Borrado Correctamente';
+            $this->mensajeSuccess = 'Miembro borrado Correctamente';
+            $this->eliminar = null;
         }
     }
 
     public function cancelar(){
         $this->crear = 'false';
         $this->miembroEdit = '';
-
+        $this->eliminar = null;
         $this->nombre = '';
         $this->apellido = '';
         $this->telefono = '';

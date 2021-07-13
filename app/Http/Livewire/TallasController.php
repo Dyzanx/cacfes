@@ -12,11 +12,21 @@ class TallasController extends Component{
     public $tallaEdit;
     public $mensajeSuccess;
     public $mensajeError;
+    public $eliminar;
 
     public function render(){
         return view('livewire.tallas', [
             'tallas' => Tallas::orderBy('id', 'desc')->get()
         ]);
+    }
+
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
+    public function eliminar($factura){
+        $this->eliminar = $factura;
     }
 
     public function update($id){
@@ -68,7 +78,7 @@ class TallasController extends Component{
                 $this->mensajeSuccess = 'talla agregada correctamente';
                 $this->crear = null;
             }else{
-                $this->mensajeError = 'hubo un fallo al agregar la tall';
+                $this->mensajeError = 'hubo un fallo al agregar la talla';
                 $this->crear = null;
             }
         }else{
@@ -85,5 +95,6 @@ class TallasController extends Component{
         $this->crear = null;
         $this->nombre = null;
         $this->tallaEdit = null;
+        $this->eliminar = null;
     }
 }

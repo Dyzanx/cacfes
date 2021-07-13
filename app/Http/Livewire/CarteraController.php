@@ -18,6 +18,7 @@ class CarteraController extends Component{
     public $compra;
     public $pago;
 
+    public $eliminar;
     public $crear = 'false';
     public $carteraEdit = '';
     public $mensajeSuccess = '';
@@ -33,6 +34,15 @@ class CarteraController extends Component{
         ]);
     }
 
+    public function eliminar($id){
+        $this->eliminar = $id;
+    }
+
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
+    }
+
     public function editar($id){
         $this->carteraEdit = Cartera::find($id);
     }
@@ -41,9 +51,11 @@ class CarteraController extends Component{
         $car = Cartera::find($id);
         $car->delete();
         if($car->delete()){
-            $this->mensajeError = 'Error Al Borrar El Elemento';
+            $this->mensajeError = 'Error al borrar el elemento';
+            $this->eliminar = null;
         }else{
-            $this->mensajeSuccess = 'Elemento Borrado Correctamente';
+            $this->mensajeSuccess = 'Elemento borrado correctamente';
+            $this->eliminar = null;
         }
     }
 
@@ -55,31 +67,23 @@ class CarteraController extends Component{
         $this->mensajeError = null;
         $this->mensajeSuccess = null;
 
-        if(!empty($this->cliente || $this->compra || $this->pago)){
-                
+        if(!empty($this->cliente || $this->compra || $this->pago)){                
             $car = Cartera::find($id);
-
-            if(!empty($this->cliente)){
-                $car->cliente_id = $this->cliente;
-            }
-            if(!empty($this->compra)){
-                $car->compra = $this->compra;
-            }
-            if(!empty($this->pago)){
-                $car->pago = $this->pago;
-            }
+            $miembro->cliente_id = $this->cliente != '' ? $this->cliente : $miembro->cliente_id;
+            $miembro->compra = $this->compra != '' ? $this->nombre : $miembro->compra;
+            $miembro->pago = $this->pago != '' ? $this->pago : $miembro->pago;
 
             $car->update();
 
             if($car->update()){
-                $this->mensajeSucces = 'Elemento Actualizado Correctamente';
+                $this->mensajeSucces = 'Elemento actualizado correctamente';
                 $this->carteraEdit = '';
             }else{
-                $this->mensajeError = 'Hubo Un Error Al Actualizar El Elemento';
+                $this->mensajeError = 'Error al actualizar el elemento';
                 $this->carteraEdit = '';
             }
         }else{
-            $this->mensajeError = 'Hacer Cambios Es Necesario Para Actualizarlos';
+            $this->mensajeError = 'Hacer cambios es becesario para actualizarlos';
             $this->carteraEdit = '';
         }
     }
@@ -89,31 +93,36 @@ class CarteraController extends Component{
         $this->mensajeSuccess = null;
 
         if(!empty($this->cliente && $this->compra && $this->pago)){
-            $car = new Cartera();            
+            if($this->pago > 0 && $this->compra > 0){
+                $car = new Cartera();            
 
-            $car->cliente_id = $this->cliente;
-            $car->compra = $this->compra;
-
-            if($this->pago >= $this->compra){
-                $car->pago = $this->compra;
+                $car->cliente_id = $this->cliente;
+                $car->compra = $this->compra;
+    
+                if($this->pago >= $this->compra){
+                    $car->pago = $this->compra;
+                }else{
+                    $car->pago = $this->pago;
+                }
+    
+                $car->save();
+                    
+                if($car->save()){
+                    $this->mensajeSuccess = 'Elemento agreagado correctamente';
+                    $this->crear = 'false';
+                    $this->cliente = '';
+                    $this->compra = '';
+                    $this->pago = '';
+                }else{
+                    $this->mensajeError = 'Error al agregar el elemento';
+                    $this->crear = 'false';
+                }
             }else{
-                $car->pago = $this->pago;
-            }
-
-            $car->save();
-                
-            if($car->save()){
-                $this->mensajeSuccess = 'Elemento Agreagado Correctamente';
-                $this->crear = 'false';
-                $this->cliente = '';
-                $this->compra = '';
-                $this->pago = '';
-            }else{
-                $this->mensajeError = 'Error Al Agregar El Elemento';
+                $this->mensajeError = 'Los numeros no pueden ser negativos ni empezar por 0';
                 $this->crear = 'false';
             }
         }else{
-            $this->mensajeError = 'Los Campos Del * Son Obligatorios';
+            $this->mensajeError = 'Los campos del * son obligatorios';
             $this->crear = 'false';
         }
     }
@@ -121,6 +130,7 @@ class CarteraController extends Component{
     public function cancelar(){
         $this->crear = 'false';
         $this->carteraEdit = '';
+        $this->eliminar = null;
     }
 
     public function limpiarBusqueda(){
