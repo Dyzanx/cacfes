@@ -94,7 +94,7 @@
                 <x-jet-button class="ml-2"
                             wire:click="logoutOtherBrowserSessions"
                             wire:loading.attr="disabled">
-                    {{ __('Cerrar otras sesiones') }}
+                    {{ __('Cerrar sesiones') }}
                 </x-jet-button>
             </x-slot>
         </x-jet-dialog-modal>

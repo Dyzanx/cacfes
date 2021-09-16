@@ -50,6 +50,7 @@ class CategoriasController extends Component{
         $this->crear = 'false';
         $this->categoriaEdit = '';
         $this->nombre = '';
+        $this->eliminar = null;
     }
 
     public function save(){
@@ -84,9 +85,11 @@ class CategoriasController extends Component{
         if($cat->delete()){
             $this->mensajeError = 'Hubo un fallo al borrar la categoria';
             $this->crear = 'false';
+            $this->eliminar = null;
         }else{
             $this->mensajeSuccess = 'Categoria borrada correctamente';
             $this->crear = 'false';
+            $this->eliminar = null;
         }
     }
 

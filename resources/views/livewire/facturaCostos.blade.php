@@ -5,17 +5,16 @@
 </x-slot>
 
 @if(!empty($eliminar))
-<div class="font-bolder p-8 h-max h-full w-full">
-    <div class="py-4 sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="font-bolder sm:p-8 h-max h-full w-full">
+    <div class="py-12">
+        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 rounded-lg sm:rounded-lg">
                                 <i wire:click.prevent="cancelar()" title="salir de esta ventana"
                                     class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"></i>
-                                <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Estas seguro de
+                                <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Estas seguro de
                                     eliminar este elemento?</h1>
                                 <div class="bg-gray-100 text-gray-900 text-xl p-2 px-4 py-3"><span>si continúas se
                                         eliminaran los datos del registro de la base de datos & no podrás recuperar la
@@ -107,9 +106,15 @@
                                                     class="block text-sm font-medium text-gray-700">Proveedor</label>
                                                 <select name="proveedor" wire:model="proveedor"
                                                     class="fbg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
-                                                    <option selected>Seleccione el proveedor</option>
                                                     @foreach($proveedores as $prov)
+                                                    @if($prov->id == $productoEdit->proveedor_id)
+                                                    <option value="{{$prov->id}}" selected>{{$prov->nombre}}</option>
+                                                    @endif
+                                                    @endforeach
+                                                    @foreach($proveedores as $prov)
+                                                    @if($prov->id != $productoEdit->proveedor_id)
                                                     <option value="{{$prov->id}}">{{$prov->nombre}}</option>
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -119,9 +124,15 @@
                                                     class="block text-sm font-medium text-gray-700">Cliente</label>
                                                 <select name="cliente" wire:model="cliente"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
-                                                    <option selected>Seleccione el cliente</option>
                                                     @foreach($clientes as $cli)
+                                                    @if($cli == $productoEdit->cliente_id)
+                                                    <option value="{{$cli->id}}">{{$cli->nombre}} selected</option>
+                                                    @endif
+                                                    @endforeach
+                                                    @foreach($clientes as $cli)
+                                                    @if($cli != $productoEdit->cliente_id)
                                                     <option value="{{$cli->id}}">{{$cli->nombre}}</option>
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -141,9 +152,9 @@
                                                     class="block text-sm font-medium text-gray-700">Valor
                                                     unitario</label>
                                                 <input type="number" wire:model="valUnitario"
-                                                    placeholder="{{$productoEdit->valUnitario}}"
-                                                    value="{{$productoEdit->valUnitario}}" name="valUnitario"
-                                                    id="valUnitario" autocomplete="off"
+                                                    placeholder="{{$productoEdit->valor_unitario}}"
+                                                    value="{{$productoEdit->valor_unitario}}" name="valor_unitario"
+                                                    id="valor_unitario" autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
 

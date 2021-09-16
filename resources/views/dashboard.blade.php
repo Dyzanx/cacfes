@@ -1,125 +1,205 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-white leading-tight">
-        Cacfe's - Tablero Administratvo
+        Cacfe's - Tablero administratvo
     </h2>
 </x-slot>
 
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
-            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Cacfe's - Total de ventas por cliente
+    <div class="max-w-7xl mx-auto lg:px-6 lg:px-8">
+
+        <div class="bg-gray-100 overflow-hidden shadow-xl lg:rounded-lg">
+            <h2 class="font-bold text-black p-3 text-3xl text-center md:float-right lg:float-right"><span class="sumatotal"></span> $</h2><span></span>
+            <h1 class="font-bold text-black p-3 text-3xl text-center md:text-left lg:text-left border-b-2 border-black">analisis de ventas
             </h1>
-            <div class="grid grid-cols-12">            
-                <div class="col-span-5 float-left">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12 md:col-span-12 lg:col-span-6 float-left">
                     <h1 class="font-extrabold text-black p-3 text-xl text-center">Seleccione el(los) cliente(s)</h1>
                     <form>
-                        @csrf
                         <div class="shadow overflow-hidden">
-                            <div class="px-4 py-5 bg-gray-100 sm:p-6">
-                                <div class="grid grid-cols-12 gap-6">
-
-                                    <div class="col-span-11 sm:col-span-11">
-                                        <label for="filtroVentas"
-                                            class="block text-sm font-medium text-gray-700">Filtro</label>
-                                        <select name="filtroVentas" wire:model="filtroVentas"
-                                            class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-select mt-1 block w-full"
+                            <div class="px-4 py-5 bg-gray-100 lg:p-6">
+                                <div class="grid grid-cols-12 gap-2">
+                                    <div class="col-span-12 md:col-span-12 lg:col-span-12">
+                                        <label for="filtroVentas" class="block text-sm font-medium text-gray-900">Filtrar por cliente</label>
+                                        <select name="filtroVentas" id="select-ventas"
+                                            class="ventas-select bg-white focus:bg-gray-100 border-gray-700 w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md"
                                             autofocus>
-                                            <option value="todos" selected>Todos Los Clientes</option>
-                                            <option value="cliente">Buscar Un Cliente</option>
+                                            <option value="todos" selected>Todos los clientes</option>
+                                            @foreach($clientes as $cli)
+                                            <option value="{{$cli->id}}">{{$cli->nombre}}</option>
+                                            @endforeach
                                         </select>
+                                        <button onclick="GraficaVentas()" class="boton-filtros p-2 ml-20 sm:ml-24 my-2 w-1/2 sm:w-2/3 rounded-md text-white text-center bg-green-400 hover:bg-green-500 focus:outline-none">Aplicar filtros <i class="bi bi-funnel"></i></button>
                                     </div>
-                                    <input type="text" id="grafica-1-x" class="hidden" value="{{$ventas}}">
-
-                                    <div class="col-span-1 sm:col-span-1">
-                                        @if($filtroVentas != 'todos')
-                                        <button wire:click.prevent="limpiarBusquedaVentas()"
-                                            class="p-2 form-input rounded-md shadow-sm mt-1 block w-10 text-white bg-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400">
-                                            <i class="bi bi-x"></i>
-                                        </button>
-                                        @endif
-                                    </div>
-
-                                    @if($filtroVentas != 'todos')
-                                    <div class="col-span-11 sm:col-span-11">
-                                        <input type="text" wire:model="buscarVentaCliente"
-                                            placeholder="Filtrar Por El Nombre Del Cliente" autocomplete="off" id="contacto"
-                                            class="mt-1 focus:ring-green-400 focus:border-green-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    </div>
-                                    @endif
-
+                                    <input type="text" class="hidden" value="{{json_encode($ventas)}}"
+                                        id="ventas-value">
+                                    <input type="text" class="hidden" value="{{json_encode($clientes)}}"
+                                        id="clientes-value">
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-span-7 float-right">
+                <div class="col-span-12 md:col-span-12 lg:col-span-6">
                     <div id="barras" class="w-full"></div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-pink-300 overflow-hidden shadow-xl sm:rounded-lg mt-10">
-            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Cacfe's - Pastelito</h1>
-            <div class="w-6/12 float-left">
-                <h1 class="font-extrabold text-black p-3 text-xl text-center">Seleccione El(los) Cliente(s)</h1>
-
-            </div>
-            <div class="w-6/12 float-right">
-                <div id="pastel"></div>
+        <div class="bg-gray-100 overflow-hidden shadow-xl lg:rounded-lg mt-10">
+            <h2 class="font-bold text-black p-3 text-3xl text-center md:float-right lg:float-right"> <span class="sumacostos"></span> $</h2>
+            <h1 class="font-bold text-black p-3 text-3xl text-center md:text-left lg:text-left border-b-2 border-black">analisis de costos</h1>
+            <div class="grid grid-cols-12">
+                <div class="col-span-12 md:col-span-12 lg:col-span-6 float-left">
+                    <h1 class="font-extrabold text-black p-3 text-xl text-center">resultados del analisis</h1>
+                    <div class="shadow overflow-hidden">
+                        <div class="px-4 py-5 bg-gray-100 lg:p-6">
+                            <div class="grid grid-cols-12 gap-2">
+                                <ul class="col-span-12">
+                                    <li class="col-span-12"><span class="font-bold">Insumos: </span>porcentaje(5%)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 md:col-span-12 lg:col-span-6">
+                    <input type="text" class="hidden" value="{{json_encode($tiposDeCosto)}}" id="tiposDeCosto-value">
+                    <input type="text" class="hidden" value="{{json_encode($costos)}}" id="costos-value">
+                    <div id="burbuja" class="w-full"></div>
+                </div>
             </div>
         </div>
 
-        <div class="bg-green-300 overflow-hidden shadow-xl sm:rounded-lg mt-10">
-            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Cacfe's - Lineal</h1>
-            <div class="w-6/12 float-left">
-                <h1 class="font-extrabold text-black p-3 text-xl text-center">Seleccione El(los) Cliente(s)</h1>
-
-            </div>
-            <div class="w-6/12 float-right">
-                <div id="lineal"></div>
+        <div class="bg-gray-100 overflow-hidden shadow-xl lg:rounded-lg mt-10">
+            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">grafica de analisis general</h1>
+            <div class="container grid grid-cols-12">
+                <div class="col-span-12 md:col-span-12 lg:col-span-6">
+                    <h1 class="font-extrabold text-black p-3 text-xl text-center">Seleccione el(los) cliente(s)</h1>
+                    <form>
+                        <div class="shadow overflow-hidden">
+                            <div class="px-4 py-5 bg-gray-100 lg:p-6">
+                                <div class="grid grid-cols-12 gap-2">
+                                    <div class="col-span-12">
+                                        <label for="filtroVentas" class="block text-sm font-medium text-gray-900">Filtro de cliente</label>
+                                        <select name="filtroVentas" class="bg-white focus:bg-gray-100 border-gray-700 w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md" autofocus>
+                                            <option value="predeterminado" selected>analisis predeterminado</option>
+                                            <option value="cliente">Buscar un cliente</option>
+                                        </select>
+                                        <button onclick="graficaDinamica()" class="boton-filtros p-2 ml-20 sm:ml-24 my-2 w-1/2 sm:w-2/3 rounded-md text-white text-center bg-green-400 hover:bg-green-500 focus:outline-none">Aplicar filtros <i class="bi bi-funnel"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-span-12 md:col-span-12 lg:col-span-6">
+                    <div id="lineal" class="w-full"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="{{asset('js/jquery.js')}}"></script>
 <script>
-// plotly JS
 
-// 1er grafica, de barras
-var dataBarras = [{
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [20, 14, 23],
-    type: 'bar'
-}];
+$('.boton-filtros').click(function(e){
+    e.preventDefault();
+});
 
-Plotly.newPlot('barras', dataBarras);
+// TODO: -------------------------------------------------------------------------------- 1er grafica
+var ventas = $('#ventas-value').val();
+ventas = JSON.parse(ventas);
+var clientes = $('#clientes-value').val();
+clientes = JSON.parse(clientes);
+var cliente;
 
-// 2da grafica, pastelito 
-var dataPastel = [{
-    values: [19, 26, 55],
-    labels: ['Residential', 'Non-Residential', 'Utility'],
-    type: 'pie'
-}];
-var layoutPastel = {
-    height: 400,
-    width: 500
-};
-Plotly.newPlot('pastel', dataPastel, layoutPastel);
+function GraficaVentas(){
+    var xs = [];
+    var ys = [];
+    var sumaVentas = 0;
+    var contador = 0;
+    var ventasCantidadMayor = 0;
 
-// 3ra grafica, lineal
-var linealTrace1 = {
-    x: [1, 2, 3, 4],
-    y: [10, 15, 13, 17],
-    type: 'scatter'
-};
-var linealTrace2 = {
-    x: [1, 2, 3, 4],
-    y: [16, 5, 11, 9],
-    type: 'scatter'
-};
-var dataLineal = [linealTrace1, linealTrace2];
-Plotly.newPlot('lineal', dataLineal);
+    if ($('.ventas-select').val() == 'todos') {
+        for (let i = 0; i < ventas.length; i++) {
+            for (let j = 0; j < clientes.length; j++) {
+                if (clientes[j].id == ventas[i].cliente_id) {
+                    sumaVentas = (ventas[i].precio*ventas[i].cantidad)+sumaVentas;
+                    xs[i] = clientes[j].nombre;
+                    ys[i] = ventas[i].precio*ventas[i].cantidad;
+                }
+            }
+        }
+    }else{
+        cliente = $('.ventas-select').val();
+
+        for (let i = 0; i < ventas.length; i++) {
+            for (let j = 0; j < clientes.length; j++) {
+                if (cliente == clientes[j].id && cliente == ventas[i].cliente_id) {
+                    sumaVentas = (ventas[i].precio*ventas[i].cantidad)+sumaVentas;
+                    xs[contador] = clientes[j].nombre;
+                    contador++;
+                }
+                ys[i] = ventas[i].precio;
+            }
+        }
+    }
+
+    var dataBarras = [{
+        x: xs,
+        y: ys,
+        type: 'bar'
+    }];
+    Plotly.newPlot('barras', dataBarras);
+    $('.sumatotal').html(sumaVentas);
+}
+GraficaVentas();
+
+
+// TODO: -------------------------------------------------------------------------------- 2da grafica
+var tiposDeCosto = $('#tiposDeCosto-value').val();
+tiposDeCosto = JSON.parse(tiposDeCosto);
+var costos = $('#costos-value').val();
+costos = JSON.parse(costos);
+
+function graficaCostos(){
+    var costosx = [];
+    var costosy = [];
+    var sumaCostos = 0;
+
+    for (let i = 0; i < tiposDeCosto.length; i++) {
+        costosx[i] = tiposDeCosto[i].nombre;
+        for (let j = 0; j < costos.length; j++) {
+            if (tiposDeCosto[i].id == costos[j].item_id) {
+                costosy[i] = costos[j].valor_unitario*costos[j].cantidad;
+                sumaCostos += costos[j].valor_unitario*costos[j].cantidad;
+            }
+        }
+    }
+
+    var dataCostos = [{
+        x: costosx,
+        y: costosy,
+        type: 'bar'
+    }];
+    Plotly.newPlot('burbuja', dataCostos);
+    $('.sumacostos').html(sumaCostos);
+}
+graficaCostos();
+
+// TODO: -------------------------------------------------------------------------------- 3er grafica
+function graficaDinamica(){
+    var dataLineal = [{
+        x: 'asd',
+        y: 1000,
+        type: 'bar'
+    }];
+    Plotly.newPlot('lineal', dataLineal);
+}
+graficaDinamica();
+
 </script>
+
 <head>
-   <title>{{ config('app.name') }} - Dashboard</title>
+    <title>{{ config('app.name') }} - Dashboard</title>
 </head>

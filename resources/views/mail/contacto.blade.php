@@ -65,9 +65,7 @@
     <h3>Información del usuario:</h3>
     <ul>
         <li><span>Correo: </span>{{$correo}}</li>
-        @if(!empty($telefono))
         <li><span>Telefono:</span>{{$telefono}}</li>
-        @endif
     </ul>
 
     <h3 class="border-top">Mensaje que dejó el usuario {{$nombre}}:</h3>

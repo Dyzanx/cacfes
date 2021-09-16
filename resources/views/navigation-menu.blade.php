@@ -1,16 +1,38 @@
 <nav x-data="{ open: false }" class="bg-gray-700 border-b border-gray-400">
+    <!-- Hamburger -->
+    <div class="boton-hamburger mr-2 mt-auto flex right-0 items-center lg:hidden md:flex float-right">
+        <button @click="open = ! open"
+            class="inline-flex items-center responsive-button justify-center p-2 rounded-md text-gray-900 hover:text-gray-800 hover:bg-gray-200 bg-gray-100 focus:outline-none transition duration-150 ease-in-out">
+            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Logo -->
+    <div class="flex-shrink-0 mx-auto lg:hidden pt-2 pb-2 px-4 px-6 items-center">
+        <a href="{{ route('welcome') }}">
+            <img src="{{ asset('img/logo.png') }}" alt="Cacfe's logo" class="w-24">
+        </a>
+    </div>
+
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-screen mx-auto px-4 hidden lg:flex lg:px-6 lg:px-8 md:hidden">
         <div class="flex justify-between h-16">
             <div class="flex">
+
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
+                <div class="flex-shrink-0 mx-auto px-3 flex items-center">
                     <a href="{{ route('welcome') }}">
-                         <img src="{{ asset('img/logo.png') }}" alt="Cacfe's Logo" class="w-24">
+                        <img src="{{ asset('img/logo.png') }}" alt="Cacfe's logo" class="w-24">
                     </a>
                 </div>
+
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 lg:-my-px lg:ml-10 lg:flex">
                     <x-jet-nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')">
                         {{ __('Inicio') }}
                     </x-jet-nav-link>
@@ -34,7 +56,7 @@
                         {{ __('Clientes') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('tipoCosto') }}" :active="request()->routeIs('tipoCosto')">
-                        {{ __('Tipo Costo') }}
+                        {{ __('Tipo costo') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
                         {{ __('Categorias') }}
@@ -49,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden lg:flex lg:items-center lg:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                 <div class="ml-3 relative">
@@ -158,33 +180,19 @@
                         </x-slot>
                     </x-jet-dropdown>
                     @else
-                    <span class="inline-flex float-right">
-                        <a href="{{route('login')}}" class="inline-flex items-center px-1 pt-1 font-medium leading-5 text-white hover:text-gray-100 hover:border-gray-100 focus:outline-none focus:text-gray-200 transition">
-                            Iniciar Sesion
+                        <a href="{{route('login')}}"
+                            class="inline-flex items-center pt-1 text-sm font-medium leading-5 text-gray-200 hover:text-white focus:outline-none focus:text-gray-200 transition">
+                            Iniciar sesion
                         </a>
-                    </span>
                     @endif
                 </div>
             </div>
 
-            <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-900 hover:text-gray-800 hover:bg-pink-200 bg-pink-300 focus:outline-none focus:bg-pink-400 focus:text-gray-900 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
         </div>
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <div x-show="open" :class="{'block': open, 'hidden': ! open}" class="hidden lg:hidden md:block">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')">
                 {{ __('Inicio') }}
@@ -197,7 +205,7 @@
                 {{ __('Cartera') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('equipo') }}" :active="request()->routeIs('equipo')">
-                {{ __('Equipo') }}
+                {{ __('Equipo de trabajo') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('ventas') }}" :active="request()->routeIs('ventas')">
                 {{ __('Ventas') }}
@@ -210,7 +218,7 @@
                 {{ __('Clientes') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('tipoCosto') }}" :active="request()->routeIs('tipoCosto')">
-                {{ __('Tipo Costo') }}
+                {{ __('Tipo costo') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
                 {{ __('Categorias') }}
@@ -224,8 +232,9 @@
             </x-jet-responsive-nav-link>
         </div>
 
+        @if(Auth::user())
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-green-900">
+        <div class="pt-4 pb-4 border-t border-white">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                 <div class="flex-shrink-0 mr-3">
@@ -236,8 +245,8 @@
 
                 @if(Auth::user())
                 <div>
-                    <div class="font-medium text-base text-gray-900">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-800">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-white">{{ Auth::user()->email }}</div>
                 </div>
                 @endif
             </div>
@@ -259,7 +268,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
                                     this.closest('form').submit();">
                         {{ __('Cerrar Sesión') }}
@@ -300,5 +308,10 @@
                 @endif
             </div>
         </div>
+        @else
+        <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+            {{ __('Iniciar sesion') }}
+        </x-jet-responsive-nav-link>
+        @endif
     </div>
 </nav>

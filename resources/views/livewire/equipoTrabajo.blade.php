@@ -1,21 +1,25 @@
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-white leading-tight">
-        Cacfe's - Equipo De Trabajo
+        Cacfe's - Equipo de trabajo
     </h2>
 </x-slot>
 
 @if(!empty($eliminar))
-<div class="font-bolder p-8 h-max h-full w-full">
-    <div class="py-4 sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="font-bolder sm:p-8 h-max h-full w-full">
+    <div class="py-12">
+        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 rounded-lg sm:rounded-lg">     
-                                <i wire:click.prevent="cancelar()" title="salir de esta ventana" class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"></i>   
-                                <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Estas seguro de eliminar este elemento?</h1>
-                                <div class="bg-gray-100 text-gray-900 text-xl p-2 px-4 py-3"><span>si continúas se eliminaran los datos del registro de la base de datos & no podrás recuperar la informacion una vez se complete la acción, estás de acuerdo?</span></div>
+                            <div class="shadow overflow-hidden border-b border-gray-200 rounded-lg sm:rounded-lg">
+                                <i wire:click.prevent="cancelar()" title="salir de esta ventana"
+                                    class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"></i>
+                                <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Estas
+                                    seguro de eliminar este elemento?</h1>
+                                <div class="bg-gray-100 text-gray-900 text-xl p-2 px-4 py-3"><span>si continúas se
+                                        eliminaran los datos del registro de la base de datos & no podrás recuperar la
+                                        informacion una vez se complete la acción, estás de acuerdo?</span></div>
                                 <div class="px-4 py-3 bg-gray-200 text-right sm:px-6 border-t-2 border-black">
                                     <a href="" wire:click.prevent="cancelar()"
                                         class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400">
@@ -45,10 +49,12 @@
                         <div class="shadow overflow-hidden sm:rounded-lg">
                             @if($crear == 'true' || $miembroEdit != '')
                             @if($miembroEdit != '')
-                            <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Editar datos del
+                            <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Editar
+                                datos del
                                 miembro - #{{$miembroEdit->id}}</h1>
                             @else
-                            <h1 class="font-bold text-black p-3 text-2xl sm:text-3xl border-b-2 border-black">Añadir nuevo miebro</h1>
+                            <h1 class="font-bold text-black p-3 text-2xl sm:text-3xl border-b-2 border-black">Añadir
+                                nuevo miebro</h1>
                             @endif
 
                             <form>
@@ -56,7 +62,7 @@
                                     <div class="px-4 py-5 bg-gray-100 sm:p-6">
                                         <div class="grid grid-cols-12 gap-6">
                                             @if($miembroEdit != '')
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="nombre"
                                                     class="block text-sm font-medium text-gray-700">Nombre</label>
                                                 <input type="text" wire:model="nombre" value="{{$miembroEdit->nombre}}"
@@ -64,7 +70,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="apellidos"
                                                     class="block text-sm font-medium text-gray-700">Apellido</label>
                                                 <input type="text" wire:model="apellido"
@@ -73,7 +79,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="telefono"
                                                     class="block text-sm font-medium text-gray-700">Telefono</label>
                                                 <input type="number" wire:model="telefono"
@@ -82,7 +88,7 @@
                                                     autocomplete="off"
                                                     class="mbg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="fechaNacimiento"
                                                     class="block text-sm font-medium text-gray-700">Fecha de
                                                     nacimiento</label>
@@ -92,7 +98,7 @@
                                                     name="fechaNacimiento" autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-4">
+                                            <div class="col-span-12 sm:col-span-4 md:col-span-4">
                                                 <label for="mes" class="block text-sm font-medium text-gray-700">Mes de
                                                     cumpleaños</label>
                                                 <input type="text" wire:model="mes"
@@ -101,7 +107,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-4">
+                                            <div class="col-span-12 sm:col-span-4 md:col-span-4">
                                                 <label for="dia" class="block text-sm font-medium text-gray-700">Dia de
                                                     cumpleaños</label>
                                                 <input type="number" wire:model="dia"
@@ -110,7 +116,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-4">
+                                            <div class="col-span-12 sm:col-span-4 md:col-span-12">
                                                 <label for="inicioLabor"
                                                     class="block text-sm font-medium text-gray-700">Inicio de
                                                     labor</label>
@@ -121,7 +127,7 @@
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
                                             @else
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="nombre"
                                                     class="block text-sm font-medium text-gray-700">Nombre<span
                                                         class="text-red-400 font-bold"> *</span></label>
@@ -129,7 +135,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="apellidos"
                                                     class="block text-sm font-medium text-gray-700">Apellido<span
                                                         class="text-red-400 font-bold"> *</span></label>
@@ -137,7 +143,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="telefono"
                                                     class="block text-sm font-medium text-gray-700">Telefono<span
                                                         class="text-red-400 font-bold"> *</span></label>
@@ -145,7 +151,7 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-3">
+                                            <div class="col-span-12 sm:col-span-3 md:col-span-4">
                                                 <label for="fechaNacimiento"
                                                     class="block text-sm font-medium text-gray-700">Fecha de
                                                     nacimiento</label>
@@ -153,19 +159,19 @@
                                                     autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-4">
+                                            <div class="col-span-12 sm:col-span-4 md:col-span-4">
                                                 <label for="mes" class="block text-sm font-medium text-gray-700">Mes de
                                                     cumpleaños<span class="text-red-400 font-bold"> *</span></label>
                                                 <input type="text" wire:model="mes" name="mes" autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-4">
+                                            <div class="col-span-12 sm:col-span-4 md:col-span-4">
                                                 <label for="dia" class="block text-sm font-medium text-gray-700">Dia de
                                                     cumpleaños<span class="text-red-400 font-bold"> *</span></label>
                                                 <input type="number" wire:model="dia" name="dia" autocomplete="off"
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
                                             </div>
-                                            <div class="col-span-12 sm:col-span-4">
+                                            <div class="col-span-12 sm:col-span-4 md:col-span-12">
                                                 <label for="inicioLabor"
                                                     class="block text-sm font-medium text-gray-700">Inicio de labor<span
                                                         class="text-red-400 font-bold"> *</span></label>
@@ -198,7 +204,8 @@
                             @else
                             <i wire:click.prevent="crear()" title="agregar elemento"
                                 class="bi bi-plus m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"></i>
-                            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Miebros de la empresa</h1>
+                            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Miebros de la empresa
+                            </h1>
                             <div class="flex bg-gray-100 border-b-2 border-black px-4 py-3 sm:px-6 pr-">
                                 <input wire:model="search" type="text"
                                     placeholder="Buscar Un Miembro Por : Nombre - Apellido - Telefono"
@@ -223,15 +230,18 @@
                                 @endif
                             </div>
                             @if($mensajeSuccess != '')
-                            <i wire:click.prevent="hideMessage()" title="Eliminar mensaje" class="bi bi-x text-red-500 hover:text-red-300 text-2xl float-right cursor-pointer"></i>
+                            <i wire:click.prevent="hideMessage()" title="Eliminar mensaje"
+                                class="bi bi-x text-red-500 hover:text-red-300 text-2xl float-right cursor-pointer"></i>
                             <strong class="font-bold text-green-700 pl-2 text-xl">{{$mensajeSuccess}}</strong>
                             @elseif($mensajeError != '')
-                            <i wire:click.prevent="hideMessage()" title="Eliminar mensaje" class="bi bi-x text-red-500 hover:text-red-300 text-2xl float-right cursor-pointer"></i>
+                            <i wire:click.prevent="hideMessage()" title="Eliminar mensaje"
+                                class="bi bi-x text-red-500 hover:text-red-300 text-2xl float-right cursor-pointer"></i>
                             <strong class="font-bold text-red-700 pl-2 text-xl">{{$mensajeError}}</strong>
                             @endif
                             <table class="min-w-full divide-y divide-black border-t-2 border-black">
                                 <thead class="bg-gray-50">
-                                    <tr class="text-center text-xs text-gray-900 uppercase border-l-2 border-r-2 border-b-2 border-gray-900">
+                                    <tr
+                                        class="text-center text-xs text-gray-900 uppercase border-l-2 border-r-2 border-b-2 border-gray-900">
                                         <th scope="col"
                                             class="px-6 py-3 font-medium bg-gray-300 border-r-2 border-gray-900 tracking-wider">
                                             Nombres
@@ -320,6 +330,7 @@
         </div>
     </div>
 </div>
+
 <head>
-   <title>{{ config('app.name') }} - Equipo de trabajo</title>
+    <title>{{ config('app.name') }} - Equipo de trabajo</title>
 </head>

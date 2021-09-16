@@ -5,31 +5,29 @@
 </x-slot>
 
 @if(!empty($eliminar))
-<div class="font-bolder p-8 h-max h-full w-full">
-    <div class="py-4 sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="font-bolder sm:p-8 h-max h-full w-full">
+    <div class="py-12">
+        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 rounded-lg sm:rounded-lg">
-                                <i wire:click.prevent="cancelar()" title="salir de esta ventana"
-                                    class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"></i>
-                                <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Estas seguro de
-                                    eliminar este elemento?</h1>
-                                <div class="bg-gray-100 text-gray-900 text-xl p-2 px-4 py-3"><span>si continúas se
-                                        eliminaran los datos del registro de la base de datos & no podrás recuperar la
-                                        informacion una vez se complete la acción, estás de acuerdo?</span></div>
-                                <div class="px-4 py-3 bg-gray-200 text-right sm:px-6 border-t-2 border-black">
-                                    <a href="" wire:click.prevent="cancelar()"
-                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400">
-                                        Cancelar
-                                    </a>
-                                    <button wire:click.prevent="borrar({{$eliminar}})" type="submit"
-                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400">
-                                        Continuar
-                                    </button>
-                                </div>
+                            <i wire:click.prevent="cancelar()" title="salir de esta ventana"
+                                class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"></i>
+                            <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Estas seguro de
+                                eliminar este elemento?</h1>
+                            <div class="bg-gray-100 text-gray-900 text-xl p-2 px-4 py-3"><span>si continúas se
+                                    eliminaran los datos del registro de la base de datos & no podrás recuperar la
+                                    informacion una vez se complete la acción, estás de acuerdo?</span></div>
+                            <div class="px-4 py-3 bg-gray-200 text-right sm:px-6 border-t-2 border-black">
+                                <a href="" wire:click.prevent="cancelar()"
+                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400">
+                                    Cancelar
+                                </a>
+                                <button wire:click.prevent="borrar({{$eliminar}})" type="submit"
+                                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400">
+                                    Continuar
+                                </button>
                             </div>
                         </div>
                     </div>

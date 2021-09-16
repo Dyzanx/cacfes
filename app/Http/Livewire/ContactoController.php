@@ -26,15 +26,14 @@ class ContactoController extends Component{
     }
 
     public function enviarMail(){
-        if(!empty($this->nombre && $this->correo && $this->asunto && $this->mensaje)){
-            Mail::to('cg9304@gmail.com')->send(new ContactoMail($this->nombre, $this->correo, $this->asunto, $this->telefono, $this->mensaje));
-
+        if(!empty($this->nombre && $this->correo && $this->asunto && $this->telefono && $this->mensaje)){
+            Mail::to('cacfes100@gmail.com')->send(new ContactoMail($this->nombre, $this->correo, $this->asunto, $this->telefono, $this->mensaje));
             $this->nombre = null;
             $this->correo = null;
             $this->asunto = null;
             $this->telefono = null;
             $this->mensaje = null;
-            $this->mensajeSuccess = 'Correo enviado!, pasado un tiempo alguien se pondrá en contacto contigo';
+            $this->mensajeSuccess = 'Correo enviado!, alguien se pondrá en contacto contigo lo mas rapido posible';
 
         }else{
             $this->nombre = null;
@@ -42,7 +41,7 @@ class ContactoController extends Component{
             $this->asunto = null;
             $this->telefono = null;
             $this->mensaje = null;
-            $this->mensajeError = 'Todos los campos excepto el telefono son obligatorios';
+            $this->mensajeError = 'Para enviar la solicitud todos los campos del formulario son obligatorios';
         }
     }
 }

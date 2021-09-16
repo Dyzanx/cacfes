@@ -1,24 +1,27 @@
-<div class="rounded-md bg-gray-100 mx-5 my-5 overflow-hidden">
-    <a title="contactar por instagram" target="_blank" href=""
-        class="m-1 sm:m-2 text-xl float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-pink-400 hover:bg-pink-500 focus:outline-none"><i
+<div class="lg:rounded-md bg-gray-100 lg:mx-5 my-5 overflow-hidden">
+    <a title="contactar por instagram" target="_blank" href="https://www.instagram.com/cacfes/"
+        class="contacto-redes m-1 lg:m-2 text-xl float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-pink-400 hover:bg-pink-500 focus:outline-none"><i
             class="bi bi-instagram"></i></a>
+            <a title="contactar a facebook" target="_blank"
+        class="contacto-redes m-1 lg:m-2 text-xl float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none"
+        href="https://www.facebook.com/profile.php?id=100070751622851"><i
+            class="bi bi-facebook"></i></a>
     <a title="contactar a whatsapp" target="_blank"
-        class="m-1 sm:m-2 text-xl float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none"
-        href="https://api.whatsapp.com/send?phone=573126656455&text=Hola Carlos, tengo una duda sobre algún servicio"><i
+        class="contacto-redes m-1 lg:m-2 text-xl float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none"
+        href="https://api.whatsapp.com/send?phone=573025853202&text=Hola!, quiero consultar algo sobre sus servicios"><i
             class="bi bi-whatsapp"></i></a>
-    <h1 class="font-bold text-black text-xl p-3 sm:text-3xl border-b-2 border-black text-center sm:text-left">
-        Contacto <span>- <a target="_blank"
-                href="https://api.whatsapp.com/send?phone=573126656455&text=Hola Carlos, tengo una duda sobre algún servicio"
-                class="text-green-400">+57 312 665 6455</a></span>
+    <h1 class="font-bold text-black text-xl p-3 lg:text-3xl border-b-2 border-black text-left">
+        Contacto - <a target="_blank"
+                href="https://api.whatsapp.com/send?phone=573025853202&text=Hola!, quiero consultar algo sobre sus servicios"
+                class="text-sm lg:text-xl text-green-400">+57 302 585 3202</a>
     </h1>
 
     <div class="grid grid-cols-12 gap-4">
-        <iframe class="col-span-12 sm:col-span-6"
-            src="https://www.google.com/maps/embed?pb=!4v1626056611622!6m8!1m7!1spdjl2r6tLBsdh2u_EoyEyg!2m2!1d6.206461006251886!2d-75.61208521583646!3f341.0098008241391!4f15.615138132019254!5f0.7820865974627469"
-            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        <div class="col-span-12 sm:col-span-6 mx-4 sm:mr-4">
+        <img class="lg:m-auto col-span-12 lg:col-span-6 md:col-span-12"
+            src="{{asset('img/foto-negocio.jpeg')}}">
+        <div class="col-span-12 lg:col-span-6 md:col-span-12 mx-4 lg:mr-4">
             <h1
-                class="font-bold text-black text-l p-1 sm:text-xl mb-2 border-b-2 border-black text-center sm:text-left">
+                class="font-bold text-black text-l p-1 lg:text-xl mb-2 border-b-2 border-black text-center lg:text-left">
                 Contactar por correo</h1>
             <form>
                 <div class="mb-2">
@@ -44,7 +47,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="telefono"
-                        class="block font-medium text-md text-gray-900 font-bold text-center">Telefono(opcional)</label>
+                        class="block font-medium text-md text-gray-900 font-bold text-center">Telefono</label>
                     <input wire:model="telefono" type="number" name="telefono"
                         class="w-full bg-white focus:bg-gray-100 border-gray-700 focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md"
                         autocomplete="off">
@@ -64,11 +67,11 @@
                 @if($mensajeSuccess != '')
                 <i wire:click.prevent="hideMessage()" title="Eliminar mensaje"
                     class="bi bi-x text-red-500 hover:text-red-300 text-2xl cursor-pointer"></i>
-                <strong class="font-bold text-green-700 pl-2 text-md">{{$mensajeSuccess}}</strong>
+                <strong class="font-bold text-green-700 pl-2 sm:text-sm md:text-md lg:text-md">{{$mensajeSuccess}}</strong>
                 @elseif($mensajeError != '')
                 <i wire:click.prevent="hideMessage()" title="Eliminar mensaje"
                     class="bi bi-x text-red-500 hover:text-red-300 text-xl cursor-pointer"></i>
-                <strong class="-bold text-red-700 pl-2 text-md">{{$mensajeError}}</strong>
+                <strong class="font-bold text-red-700 pl-2 sm:text-sm md:text-md lg:text-md">{{$mensajeError}}</strong>
                 @endif
             </form>
         </div>

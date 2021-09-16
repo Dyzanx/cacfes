@@ -5,17 +5,16 @@
 </x-slot>
 
 @if(!empty($eliminar))
-<div class="font-bolder p-8 h-max h-full w-full">
-    <div class="py-4 sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="font-bolder sm:p-8 h-max h-full w-full">
+    <div class="py-12">
+        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 rounded-lg sm:rounded-lg">
                                 <i wire:click.prevent="cancelar()" title="salir de esta ventana"
                                     class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"></i>
-                                <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Estas seguro de
+                                <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Estas seguro de
                                     eliminar este elemento?</h1>
                                 <div class="bg-gray-100 text-gray-900 text-xl p-2 px-4 py-3"><span>si continúas se
                                         eliminaran los datos del registro de la base de datos & no podrás recuperar la
@@ -41,17 +40,16 @@
 @endif
 
 @if($ventaDetalle && $pagoDetalle && $obDetalle || $obDetalle)
-<div class="font-bolder p-8 h-max h-full w-full">
-    <div class="py-4 sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="font-bolder sm:p-8 h-max h-full w-full">
+    <div class="py-12">
+        <div class="bg-gray-100 overflow-hidden shadow-xl sm:rounded-lg">
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 rounded-lg sm:rounded-lg">
                                 <i wire:click.prevent="cancelarDetalles()" title="salir de esta ventana"
                                     class="bi bi-x m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400"></i>
-                                <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Detalles de la
+                                <h1 class="font-bold text-black p-3 text-xl sm:text-3xl border-b-2 border-black">Detalles de la
                                     factura : {{$ventaDetalle->factura}}</h1>
                                 <ul class="p-5">
                                     <li><span class="font-bold">Factura :</span> {{ $ventaDetalle->factura }}</li>
@@ -84,7 +82,7 @@
                                     @if(!empty($obDetalle->nota))
                                     <li><span class="font-bold">Observacion :</span> {{$obDetalle->nota}}</li>
                                     @else
-                                    <li><span class="font-bold">Observacion :</span> .....</li>
+                                    <li class="font-bold">Observacion : ...</li>
                                     @endif
                                 </ul>
                             </div>
@@ -111,6 +109,8 @@
                             @elseif($crear != '')
                             <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Crear nueva venta</h1>
                             @endif
+
+                            <!-- formularios de agregar y editar el registro-->
                             <form>
                                 <div class="shadow overflow-hidden sm:rounded-md">
                                     <div class="px-4 py-5 bg-gray-100 sm:p-6">
@@ -218,7 +218,7 @@
                                                 <label for="notaOb"
                                                     class="block text-sm font-medium text-gray-900">Observación</label>
                                                 <textarea wire:model="notaOb" name="notaOb" cols="30" rows="6"
-                                                    value="{{$obEdit->nota}}" placeholder="{{$obEdit->nota}}"
+                                                    @if($notaOb) value="{{$obEdit->nota}}" placeholder="{{$obEdit->nota}}" @endif
                                                     class="bg-white focus:bg-gray-100 border-gray-700  w-full focus:border-2 focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md"></textarea>
                                             </div>
                                             @else
@@ -329,9 +329,11 @@
                                 </div>
                             </form>
                             @else
+
+                            <!-- menu de filtracion de la informacion de la tabla -->
                             <i wire:click.prevent="crear()" title="agregar elemento"
                                 class="bi bi-wallet2 m-3 cursor-pointer float-right inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-300 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"></i>
-                            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Ultimas ventas</h1>
+                            <h1 class="font-bold text-black p-3 text-3xl border-b-2 border-black">Informacion de las ventas</h1>
                             <div class="flex bg-gray-100 border-b-2 border-black px-4 py-3 sm:px-6 pr-">
                                 <input wire:model="search" type="text" placeholder="Busqueda De Venta Por Factura"
                                     class="bg-white focus:bg-gray-100 m-3 border-gray-700 form-input mt-1 block w-full focus:border-2 block focus:border-gray-800 focus:ring focus:ring-gray-300 rounded-md shadow-md">
@@ -354,6 +356,8 @@
                                 </button>
                                 @endif
                             </div>
+
+                            <!-- mensajes de alerta -->
                             @if($mensajeSuccess != '')
                             <i wire:click.prevent="hideMessage()" title="Eliminar mensaje"
                                 class="bi bi-x text-red-500 hover:text-red-300 text-2xl float-right cursor-pointer"></i>
@@ -363,7 +367,10 @@
                                 class="bi bi-x text-red-500 hover:text-red-300 text-2xl float-right cursor-pointer"></i>
                             <strong class="font-bold text-red-700 pl-2 text-xl">{{$mensajeError}}</strong>
                             @endif
+
                             <table class="min-w-full divide-y divide-black border-t-2 border-black">
+
+                                <!-- cabecera de la tabla -->
                                 <thead class="bg-gray-500">
                                     <tr
                                         class="text-center text-xs text-gray-900 uppercase border-l-2 border-r-2 border-b-2 border-gray-900">
@@ -405,6 +412,7 @@
                                 </tr>
                             </thead>
                             @foreach($ventas as $venta)
+                            <!-- informacion de la tabla -->
                             <tbody class="bg-gray-200 text-center">
                                     <tr class="border-2 border-gray-900">
                                         <td class="px-6 py-4 whitespace-nowrap border-r-2 border-gray-900">
@@ -425,14 +433,17 @@
                                             @endforeach
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap border-r-2 border-gray-900">
-                                            {{substr(number_format($venta->precio*$venta->cantidad), 0, 7)}}...$
+                                            {{substr(number_format($venta->total), 0, 7)}}...$
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap border-r-2 border-gray-900">
                                             @foreach($pagos as $pa)
                                             @if($pa->factura == $venta->factura)
-                                            @php $tempFechaPago = new \Carbon\Carbon($pa->fecha_pago) @endphp
-                                            @php $tempFechaVenta = new \Carbon\Carbon($venta->fecha_venta) @endphp
-                                            {{ number_format($tempFechaPago->diffInDays($tempFechaVenta)) }}
+                                                @php 
+                                                    $tempFechaPago = new \Carbon\Carbon($pa->fecha_pago);
+                                                    $tempFechaVenta = new \Carbon\Carbon($venta->fecha_venta);
+                                                    $diferenciaDeFechas = $tempFechaPago->diffInDays($tempFechaVenta);
+                                                @endphp
+                                                {{ number_format($tempFechaPago->diffInDays($tempFechaVenta)) }}
                                             @endif
                                             @endforeach
                                         </td>
@@ -457,6 +468,7 @@
                                     </tbody>
                                     @endforeach
                             </table>
+                            <!-- popup eliminar registro -->
                             <div class="bg-gray-100 px-4 py-3 sm:px-6">
                                 {{$ventas->links()}}
                             </div>

@@ -31,6 +31,7 @@ class VentasController extends Component{
 
     public $tempFechaVenta;
     public $tempFechaPago;
+    public $diferenciaDeFechas;
 
     public $fechaPago;
     public $pagoCliente;
@@ -88,6 +89,7 @@ class VentasController extends Component{
             $ve->cliente_id = $this->cliente != '' ? $this->cliente : $ve->cliente_id;
             $ve->cantidad = $this->cantidad != '' ? $this->cantidad : $ve->cantidad;
             $ve->precio = $this->precio != '' ? $this->precio : $ve->precio;
+            $ve->total = $this->precio != '' && $this->cantidad != '' ? $this->precio*$this->cantidad : $ve->total;
             $ve->fecha_venta = $this->fecha != '' ? $this->fecha : $ve->fecha_venta;
             $pa->fecha_pago = $this->fechaPago != '' ? $this->fechaPago : $pa->fecha_pago;
             $pa->nota = $this->notaOb != '' ? $this->notaOb : $pa->nota;
@@ -138,6 +140,7 @@ class VentasController extends Component{
             $venta->categoria_id = $this->categoria;
             $venta->cantidad = $this->cantidad;
             $venta->precio = $this->precio;
+            $venta->total = $this->precio*$this->cantidad;
             $venta->fecha_venta = $this->fecha;
 
             $pago->factura = $this->factura;
@@ -157,21 +160,21 @@ class VentasController extends Component{
             if($venta->save() && $ob->save() && $pago->save()){
                 $this->mensajeSuccess = 'Venta añadida correctamente';
                 $this->crear = 'false';
-                $this->factura = '';
-                $this->cliente = '';
-                $this->categoria = '';
-                $this->cantidad = '';
-                $this->precio = '';
-                $this->fecha = '';
+                $this->factura = null;
+                $this->cliente = null;
+                $this->categoria = null;
+                $this->cantidad = null;
+                $this->precio = null;
+                $this->fecha = null;
 
-                $this->factura = '';
-                $this->fechaPago = '';
-                $this->pagoCliente = '';
-                $this->tardanza = '';
-                $this->saldo = '';
+                $this->factura = null;
+                $this->fechaPago = null;
+                $this->pagoCliente = null;
+                $this->tardanza = null;
+                $this->saldo = null;
 
-                $this->factura = '';
-                $this->notaOb = '';
+                $this->factura = null;
+                $this->notaOb = null;
             }else{
                 $this->mensajeError = 'Hubo un error al añadir la venta';
                 $this->crear = 'false';

@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS ventas(
     categoria_id int(255),
     cantidad int(255),
     precio int(255),
+    total int()255,
     fecha_venta date,
     created_at datetime,
     updated_at datetime,
@@ -146,4 +147,12 @@ CREATE TABLE IF NOT EXISTS tallas(
     nombre varchar(255),
     updated_at datetime,
     created_at datetime
-);
+)Engine=InnoDb;
+
+CREATE TABLE IF NOT EXISTS welcome_diseños(
+    id int(255) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image_path LONGTEXT,
+    diseño_para varchar(100),
+    updated_at datetime,
+    created_at datetime
+)Engine=InnoDb;

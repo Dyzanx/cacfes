@@ -5,13 +5,17 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Diseños;
 use App\Models\Tallas;
+use App\Models\WelcomeDiseños;
 
 class Welcome extends Component{
+    public $para;
     public $crear;
+    public $agregarPancarta;
     public $detalles;
     public $mensajeSuccess;
     public $mensajeError;
     public $editar;
+    public $ventana = 'true';
 
     public $nombre;
     public $stock;
@@ -25,8 +29,45 @@ class Welcome extends Component{
     public function render(){
         return view('welcome', [
             'diseños' => Diseños::orderBy('id', 'desc')->paginate(20),
-            'tallas' => Tallas::orderBy('id', 'desc')->get()
+            'tallas' => Tallas::orderBy('id', 'desc')->get(),
+            'elementosCarrusel' => WelcomeDiseños::where('diseño_para', '=', 'carrusel')->orderBy('id', 'desc')->paginate(3),
+            'elemento' => WelcomeDiseños::where('diseño_para', '=', 'cartelera')->orderBy('id', 'desc')->paginate(1),
         ]);
+    }
+
+    public function cerrarVentana(){
+        $this->ventana = null;
+    }
+
+    public function saveWelcome(){
+        if(!empty($this->image_path && $this->para)){
+            $we = new WelcomeDiseños();
+
+            $we->image_path = $this->image_path;
+            $we->diseño_para = $this->para;
+
+            $we->save();
+
+            if($we->save()){
+                $this->mensajeSuccess = 'Agregado correctamente';
+                $this->agregarPancarta = null;
+            }else{
+                $this->mensajeError = 'Hubo un error al completar la acción';
+                $this->agregarPancarta = null;
+            }
+        }else{
+            $this->mensajeError = 'Los dos datos son obligatorios para agregar al contenido';
+            $this->agregarPancarta = null;
+        }
+    }
+
+    public function agregarPancarta(){
+        $this->agregarPancarta = 'true';
+    }
+
+    public function hideMessage(){
+        $this->mensajeError = null;
+        $this->mensajeSuccess = null;
     }
 
     public function borrar($id){
@@ -71,15 +112,14 @@ class Welcome extends Component{
             $di->update();
 
             if($di->update()){
-                $this->mensajeSuccess = 'Diseño Actualizado Correctamente';
+                $this->mensajeSuccess = 'Diseño actualizado correctamente';
                 $this->editar = null;
             }else{
-                $this->mensajeError = 'Hubo Un Error Al Actualizar El Diseño';
+                $this->mensajeError = 'Hubo un error al actualizar el diseño';
                 $this->editar = null;
             }
         }else{
-            $this->mensajeError = 'Son Necesarios Cambios Para Actualizarlos';
-             
+            $this->mensajeError = 'Son necesarios cambios para actualizarlos';
             $this->editar = null;
             $this->nombre = null;
             $this->stock = null;
@@ -104,9 +144,6 @@ class Welcome extends Component{
     public function detallesM($id){
         $this->detalles = Diseños::find($id);
     }
-    public function hola(){
-        $this->detalles = "hola";
-    }
 
     public function handleFileUpload($imageData){
         $this->image_path = $imageData;
@@ -118,22 +155,27 @@ class Welcome extends Component{
         $this->mensajeSuccess = null;
 
         if(!empty($this->nombre && $this->stock && $this->precio && $this->talla && $this->descripcion && $this->image_path)){
-            $dis = new Diseños();
+            if($this->stock > 0 && $this->precio > 0){
+                $dis = new Diseños();
 
-            $dis->nombre = $this->nombre;
-            $dis->stock = $this->stock;
-            $dis->precio = $this->precio;
-            $dis->talla = $this->talla;
-            $dis->descripcion = $this->descripcion;
-            $dis->image_path = $this->image_path;
-
-            $dis->save();
-
-            if($dis->save()){
-                $this->mensajeSuccess = 'Diseño Añadido Correctamente';
-                $this->crear = null;
+                $dis->nombre = $this->nombre;
+                $dis->stock = $this->stock;
+                $dis->precio = $this->precio;
+                $dis->talla = $this->talla;
+                $dis->descripcion = $this->descripcion;
+                $dis->image_path = $this->image_path;
+    
+                $dis->save();
+    
+                if($dis->save()){
+                    $this->mensajeSuccess = 'Diseño añadido correctamente';
+                    $this->crear = null;
+                }else{
+                    $this->mensajeError = 'Hubo un fallo al guardar el diseño';
+                    $this->crear = null;
+                }
             }else{
-                $this->mensajeError = 'Hubo Un Fallo Al Guardar El Diseño';
+                $this->mensajeError = 'Los numeros no pueden ser negativos ni 0';
                 $this->crear = null;
             }
         }else{
@@ -150,7 +192,7 @@ class Welcome extends Component{
         $this->descripcion = '';
     }
 
-    public function crear(){
+    public function agregarDiseño(){
         $this->crear = 'true';
     }
 
@@ -164,6 +206,7 @@ class Welcome extends Component{
         $this->mensajeSuccess = null;
         $this->crear = null;
         $this->detalles = null;
+        $this->agregarPancarta = null;
 
         $this->nombre = null;
         $this->stock = null;

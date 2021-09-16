@@ -13,6 +13,7 @@ class facturaCostosController extends Component{
         'search' => ['except' => ''],
         'perPage'
     ];
+    
     public $search;
     public $perPage = 10;
 

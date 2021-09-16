@@ -61,8 +61,10 @@ class TallasController extends Component{
 
         if($ta->delete()){
             $this->mensajeError = 'Hubo un error al eliminarla';
+            $this->eliminar = null;
         }else{
             $this->mensajeSuccess = 'Talla eliminada correctamente';
+            $this->eliminar = null;
         }
     }
 
